@@ -8,3 +8,5 @@
     = csrf_meta_tags
   %body
     = yield
+    %hr
+      = link_to('Exit', destroy_user_session_path, method: :delete) if current_user

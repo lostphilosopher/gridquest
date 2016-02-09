@@ -1,0 +1,23 @@
+%h1
+  Current Game
+
+= "Player: #{@game.player.name}"
+%br
+= "Current position: (#{@box.x}, #{@box.y})"
+%br
+= "Available Paths: #{@box.paths}"
+
+%h2
+  Actions
+
+%strong
+  Move
+%br
+= link_to 'North', edit_game_path(id: @game.id, game_action: 'n')
+%br
+= link_to 'West', edit_game_path(id: @game.id, game_action: 'w')
+= link_to 'East', edit_game_path(id: @game.id, game_action: 'e')
+%br
+= link_to 'South', edit_game_path(id: @game.id, game_action: 's')
+
+
