@@ -1,6 +1,8 @@
 class Player < ActiveRecord::Base
   belongs_to :game
 
+  after_save :mark_current_box_explored
+
   def move(direction)
     update_position_by_direction(direction) if self.box.paths.include? direction
   end
@@ -27,5 +29,11 @@ class Player < ActiveRecord::Base
 
   def box
     Box.find(current_box_id)
+  end
+
+  private
+
+  def mark_current_box_explored
+    box.update(explored: true) if current_box_id && !box.explored?
   end
 end

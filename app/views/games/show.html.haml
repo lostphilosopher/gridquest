@@ -8,6 +8,24 @@
 = "Available Paths: #{@box.paths}"
 
 %h2
+  Description
+
+%p
+  = @box.description.text
+= image_tag @box.description.url
+
+%h2
+  NPCs
+- if @box.npc
+  %strong
+    = @box.npc.description.name
+  %p
+    = @box.npc.description.text
+  = image_tag @box.npc.description.url
+- else
+  None
+
+%h2
   Actions
 
 %strong

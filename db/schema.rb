@@ -11,18 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209144935) do
+ActiveRecord::Schema.define(version: 20160209231813) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
     t.integer  "y"
     t.string   "paths"
+    t.boolean  "explored"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "grid_id"
   end
 
   add_index "boxes", ["grid_id"], name: "index_boxes_on_grid_id"
+
+  create_table "descriptions", force: :cascade do |t|
+    t.string   "name"
+    t.string   "text"
+    t.string   "url"
+    t.string   "background_color"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "box_id"
+    t.integer  "npc_id"
+  end
+
+  add_index "descriptions", ["box_id"], name: "index_descriptions_on_box_id"
+  add_index "descriptions", ["npc_id"], name: "index_descriptions_on_npc_id"
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -41,6 +56,15 @@ ActiveRecord::Schema.define(version: 20160209144935) do
   end
 
   add_index "grids", ["game_id"], name: "index_grids_on_game_id"
+
+  create_table "npcs", force: :cascade do |t|
+    t.integer  "current_box_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "grid_id"
+  end
+
+  add_index "npcs", ["grid_id"], name: "index_npcs_on_grid_id"
 
   create_table "players", force: :cascade do |t|
     t.string   "name"

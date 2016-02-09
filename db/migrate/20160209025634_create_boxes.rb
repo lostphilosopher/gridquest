@@ -4,6 +4,7 @@ class CreateBoxes < ActiveRecord::Migration
       t.integer :x
       t.integer :y
       t.string :paths
+      t.boolean :explored
 
       t.timestamps null: false
     end

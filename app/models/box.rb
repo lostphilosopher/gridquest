@@ -2,6 +2,8 @@ class Box < ActiveRecord::Base
   belongs_to :grid
   belongs_to :player
 
+  has_one :description
+
   after_create :populate_default_paths
 
   def paths_from_grid_boundaries
@@ -12,6 +14,14 @@ class Box < ActiveRecord::Base
     paths << 'w' if x > 1
 
     paths
+  end
+
+  def explored?
+    explored
+  end
+
+  def npc
+    Npc.find_by(current_box_id: self.id)
   end
 
   private

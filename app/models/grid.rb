@@ -1,5 +1,6 @@
 class Grid < ActiveRecord::Base
   has_many :boxes
+  has_many :npcs
   belongs_to :game
 
   def find_by_coordinates(x_cord, y_cord)
