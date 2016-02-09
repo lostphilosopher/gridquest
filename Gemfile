@@ -2,10 +2,16 @@ source 'https://rubygems.org'
 
 # User CRUD
 gem 'devise', '3.5.3'
+# Use FactoryGirl for building models in unit tests
+gem 'factory_girl_rails', '4.6.0'
 # Use HAML for Views
 gem 'haml-rails', '~> 0.9'
+# Use pry for debugging
+gem 'pry-rails', '0.3.4'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
+# Use RSpec for testing
+gem 'rspec-rails', '3.4.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
