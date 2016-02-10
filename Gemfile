@@ -2,16 +2,10 @@ source 'https://rubygems.org'
 
 # User CRUD
 gem 'devise', '3.5.3'
-# Use FactoryGirl for building models in unit tests
-gem 'factory_girl_rails', '4.6.0'
 # Use HAML for Views
 gem 'haml-rails', '~> 0.9'
-# Use pry for debugging
-gem 'pry-rails', '0.3.4'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
-# Use RSpec for testing
-gem 'rspec-rails', '3.4.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -22,7 +16,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -44,12 +37,21 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # Use FactoryGirl for building models in unit tests
+  gem 'factory_girl_rails', '4.6.0'
+  # Shoulda for controller specs
+  gem 'shoulda-matchers', '2.8.0'
+  # Code coverage tool
+  gem 'simplecov', '~> 0.11.2'
+  # Use RSpec for testing
+  gem 'rspec-rails', '3.4.2'
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-
+  # Use pry for debugging
+  gem 'pry-rails', '0.3.4'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console', '~> 2.0'
 end

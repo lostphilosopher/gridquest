@@ -8,9 +8,9 @@ class Box < ActiveRecord::Base
 
   def paths_from_grid_boundaries
     paths = ''
-    paths << 'n' if y < grid.length
+    paths << 'n' if y < self.grid.length
     paths << 's' if y > 1
-    paths << 'e' if x < grid.width
+    paths << 'e' if x < self.grid.width
     paths << 'w' if x > 1
 
     paths

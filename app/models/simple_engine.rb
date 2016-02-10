@@ -1,15 +1,21 @@
-class SimpleEngine
+# Must expose battle
+class SimpleEngine < Engine
+  BASE_NUMBER = 20
+
   def battle(player, npc)
     # Player vs NPC
-    damage = SimpleEngine.attack(player.stat) - SimpleEngine.defense(npc.stat)
-    resulting_health = [0, npc.stat.current_health - damage].max
-    npc.stat.update(current_health: resulting_health) if damage > 0
-    return if resulting_health == 0
+    round(player, npc)
+    return if npc.stat.current_health == 0
 
     # If NPC survives NPC vs Player
-    damage = SimpleEngine.attack(npc.stat) - SimpleEngine.defense(player.stat)
-    resulting_health = [0, player.stat.current_health - damage].max
-    player.stat.update(current_health: resulting_health) if damage > 0
+    round(npc, player)
+  end
+
+  def round(combatant_1, combatant_2)
+    # combatant_1 always strikes first
+    damage = SimpleEngine.attack(combatant_1.stat) - SimpleEngine.defense(combatant_2.stat)
+    resulting_health = [0, combatant_2.stat.current_health - damage].max
+    combatant_2.stat.update(current_health: resulting_health) if damage > 0
   end
 
   private
