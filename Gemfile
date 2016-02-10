@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+# Bootstrap for SASS
+gem 'bootstrap-sass', '~> 3.3.4'
 # User CRUD
 gem 'devise', '3.5.3'
 # Use HAML for Views
