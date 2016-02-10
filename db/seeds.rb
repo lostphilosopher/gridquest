@@ -11,11 +11,7 @@ user = User.create(
   password: '12345678'
 )
 
-game = Game.create(user: user)
-
-Player.create(name: 'socratesinblack', game: game)
-
-grid = Grid.create(length: 3, width: 3, game: game)
+grid = Grid.create(length: 3, width: 3)
 
 descriptions = [
   'Here two roads diverge in a narrow wood.',
@@ -59,7 +55,9 @@ image_urls = [
 
 ['Omar the Bold', 'Hergon the Terrible', 'Grif the Vain'].each do |n|
   d = Description.create(name: n, text: descriptions.sample, url: image_urls.sample)
-  Npc.create(description: d, grid: grid)
+  h = rand(1..10)
+  stat = Stat.create(base_health: h, base_attack: rand(1..10), base_defense: rand(1..10), current_health: h)
+  Npc.create(description: d, grid: grid, stat: stat)
 end
 
 

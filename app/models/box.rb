@@ -21,7 +21,8 @@ class Box < ActiveRecord::Base
   end
 
   def npc
-    Npc.find_by(current_box_id: self.id)
+    npc = Npc.find_by(current_box_id: self.id)
+    npc unless npc.dead?
   end
 
   private

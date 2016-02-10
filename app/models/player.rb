@@ -1,6 +1,8 @@
 class Player < ActiveRecord::Base
   belongs_to :game
 
+  has_one :stat
+
   after_save :mark_current_box_explored
 
   def move(direction)

@@ -5,11 +5,12 @@
 %br
 = "Current position: (#{@box.x}, #{@box.y})"
 %br
+= "Current health: #{@game.player.stat.current_health}/#{@game.player.stat.base_health}"
+%br
 = "Available Paths: #{@box.paths}"
 
 %h2
   Description
-
 %p
   = @box.description.text
 = image_tag @box.description.url
@@ -22,6 +23,8 @@
   %p
     = @box.npc.description.text
   = image_tag @box.npc.description.url
+  %br
+    = "NPC current health: #{@box.npc.stat.current_health}"
 - else
   None
 
@@ -37,5 +40,8 @@
 = link_to 'East', edit_game_path(id: @game.id, game_action: 'e')
 %br
 = link_to 'South', edit_game_path(id: @game.id, game_action: 's')
-
-
+%br
+%strong
+  Attack
+%br
+= link_to 'Attack', edit_game_path(id: @game.id, game_action: 'a')

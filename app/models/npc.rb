@@ -1,5 +1,7 @@
 class Npc < ActiveRecord::Base
   has_one :description
+  has_one :stat
+
   belongs_to :grid
 
   after_create :place_on_grid
@@ -7,6 +9,10 @@ class Npc < ActiveRecord::Base
   def box
     return unless self.current_box_id
     Box.find(current_box_id)
+  end
+
+  def dead?
+    (self.stat.current_health == 0)
   end
 
   private
