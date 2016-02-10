@@ -26,7 +26,7 @@ class Player < ActiveRecord::Base
     end
 
     new_box = self.game.grid.find_by_coordinates(x, y)
-    self.update(current_box_id: new_box.id)
+    update(current_box_id: new_box.id)
   end
 
   def box

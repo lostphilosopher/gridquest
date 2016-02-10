@@ -43,13 +43,13 @@ group :development, :test do
   gem 'shoulda-matchers', '2.8.0'
   # Code coverage tool
   gem 'simplecov', '~> 0.11.2'
+  # Use pry for debugging
+  gem 'pry-rails', '0.3.4'
   # Use RSpec for testing
   gem 'rspec-rails', '3.4.2'
 end
 
 group :development do
-  # Use pry for debugging
-  gem 'pry-rails', '0.3.4'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   # Access an IRB console on exception pages or by using <%= console %> in views
