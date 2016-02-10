@@ -7,6 +7,11 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = yield
-    %hr
-      = link_to('Exit', destroy_user_session_path, method: :delete) if current_user
+    .container-fluid
+      .row
+        .col-xs-10.col-xs-offset-1
+          %h1 Quenzar's Grids
+          %hr
+          = yield
+          %hr
+            = link_to('Exit', destroy_user_session_path, method: :delete) if current_user
