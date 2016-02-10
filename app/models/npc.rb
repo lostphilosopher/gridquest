@@ -11,10 +11,6 @@ class Npc < ActiveRecord::Base
     Box.find(current_box_id)
   end
 
-  def dead?
-    (self.stat.current_health == 0)
-  end
-
   private
 
   def place_on_grid

@@ -33,6 +33,10 @@ class GamesController < ApplicationController
     # Combat
     @engine.battle(player, player.box.npc) if (('a' == action) && player.box.npc)
 
+    # Lose Game
+    return redirect_to games_path if player.stat.dead?
+
+    # Continue Game
     return redirect_to game_path(id: game.id)
   end
 

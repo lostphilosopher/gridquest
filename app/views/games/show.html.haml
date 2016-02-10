@@ -17,7 +17,7 @@
 
 %h2
   NPCs
-- if @box.npc
+- if @box.npc && !@box.npc.stat.dead?
   %strong
     = @box.npc.description.name
   %p
