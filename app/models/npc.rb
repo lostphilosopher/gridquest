@@ -1,6 +1,7 @@
 class Npc < ActiveRecord::Base
   has_one :description
   has_one :stat
+  has_many :items
 
   belongs_to :grid
 
@@ -9,6 +10,10 @@ class Npc < ActiveRecord::Base
   def box
     return unless self.current_box_id
     Box.find(current_box_id)
+  end
+
+  def equipped_items
+    Item.where(npc: self, equipped: true)
   end
 
   private

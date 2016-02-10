@@ -1,6 +1,12 @@
 %h1
   Current Game
 
+%h2
+  Description
+
+%h3
+  Status
+
 = "Player: #{@game.player.name}"
 %br
 = "Current position: (#{@box.x}, #{@box.y})"
@@ -9,13 +15,13 @@
 %br
 = "Available Paths: #{@box.paths}"
 
-%h2
-  Description
+%h3
+  Surroundings
 %p
   = @box.description.text
 = image_tag @box.description.url
 
-%h2
+%h3
   NPCs
 - if @box.npc && !@box.npc.stat.dead?
   %strong
@@ -27,6 +33,22 @@
     = "NPC current health: #{@box.npc.stat.current_health}"
 - else
   None
+
+%h3
+  Items
+- if @box.npc && !@box.npc.stat.dead?
+  Defeat the NPC to see what's in this room!
+- else
+  - if !@box.items.empty?
+    - @box.items.each do |item|
+      = "#{item.description.name}: #{item.description.text}"
+      %br
+      = image_tag item.description.url
+      %br
+      = link_to "Take: #{item.description.name}", edit_game_path(id: @game.id, game_action: 't')
+  - else
+    There's nothing useful here...
+
 
 %h2
   Actions

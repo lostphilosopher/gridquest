@@ -616,6 +616,13 @@
         null,
         null
       ],
+      "/Users/wanderse/projects/quenzars_grids/spec/factories/items.rb": [
+        1,
+        1,
+        null,
+        null,
+        null
+      ],
       "/Users/wanderse/projects/quenzars_grids/spec/factories/npcs.rb": [
         1,
         1,
@@ -839,6 +846,7 @@
         1,
         1,
         1,
+        1,
         null
       ],
       "/Users/wanderse/projects/quenzars_grids/spec/models/engine_spec.rb": [
@@ -920,6 +928,21 @@
         null,
         null
       ],
+      "/Users/wanderse/projects/quenzars_grids/spec/models/item_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        null
+      ],
+      "/Users/wanderse/projects/quenzars_grids/app/models/item.rb": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        null
+      ],
       "/Users/wanderse/projects/quenzars_grids/spec/models/npc_spec.rb": [
         1,
         null,
@@ -941,14 +964,19 @@
         1,
         1,
         1,
-        null,
         1,
         null,
         1,
         null,
         1,
+        null,
         1,
         1,
+        1,
+        null,
+        null,
+        1,
+        9,
         null,
         null,
         1,
@@ -1037,6 +1065,8 @@
         1,
         null,
         1,
+        null,
+        1,
         5,
         null,
         null,
@@ -1062,6 +1092,10 @@
         null,
         1,
         119,
+        null,
+        null,
+        1,
+        9,
         null,
         null,
         1,
@@ -1147,6 +1181,30 @@
         1,
         9,
         null,
+        null,
+        1,
+        0,
+        0,
+        0,
+        null,
+        0,
+        null,
+        null,
+        1,
+        9,
+        9,
+        0,
+        null,
+        9,
+        null,
+        null,
+        1,
+        9,
+        9,
+        0,
+        null,
+        9,
+        null,
         null
       ],
       "/Users/wanderse/projects/quenzars_grids/spec/models/stat_spec.rb": [
@@ -1170,6 +1228,7 @@
         1,
         1,
         1,
+        1,
         null,
         1,
         10,
@@ -1177,6 +1236,6 @@
         null
       ]
     },
-    "timestamp": 1455081277
+    "timestamp": 1455083782
   }
 }

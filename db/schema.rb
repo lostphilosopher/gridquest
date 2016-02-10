@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209235810) do
+ActiveRecord::Schema.define(version: 20160210052208) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
@@ -34,9 +34,11 @@ ActiveRecord::Schema.define(version: 20160209235810) do
     t.datetime "updated_at",       null: false
     t.integer  "box_id"
     t.integer  "npc_id"
+    t.integer  "item_id"
   end
 
   add_index "descriptions", ["box_id"], name: "index_descriptions_on_box_id"
+  add_index "descriptions", ["item_id"], name: "index_descriptions_on_item_id"
   add_index "descriptions", ["npc_id"], name: "index_descriptions_on_npc_id"
 
   create_table "games", force: :cascade do |t|
@@ -56,6 +58,20 @@ ActiveRecord::Schema.define(version: 20160209235810) do
   end
 
   add_index "grids", ["game_id"], name: "index_grids_on_game_id"
+
+  create_table "items", force: :cascade do |t|
+    t.boolean  "equipped"
+    t.integer  "current_box_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "player_id"
+    t.integer  "npc_id"
+    t.integer  "grid_id"
+  end
+
+  add_index "items", ["grid_id"], name: "index_items_on_grid_id"
+  add_index "items", ["npc_id"], name: "index_items_on_npc_id"
+  add_index "items", ["player_id"], name: "index_items_on_player_id"
 
   create_table "npcs", force: :cascade do |t|
     t.integer  "current_box_id"
@@ -85,8 +101,10 @@ ActiveRecord::Schema.define(version: 20160209235810) do
     t.datetime "updated_at",     null: false
     t.integer  "player_id"
     t.integer  "npc_id"
+    t.integer  "item_id"
   end
 
+  add_index "stats", ["item_id"], name: "index_stats_on_item_id"
   add_index "stats", ["npc_id"], name: "index_stats_on_npc_id"
   add_index "stats", ["player_id"], name: "index_stats_on_player_id"
 

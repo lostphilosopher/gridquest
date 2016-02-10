@@ -60,13 +60,28 @@ image_urls = [
   Npc.create(description: d, grid: grid, stat: stat)
 end
 
+description = Description.create(
+  name: "Mjolnir",
+  text: 'The hammer of Thor!',
+  url: 'https://static.pexels.com/photos/8263/pexels-photo-medium.jpg'
+)
+stat = Stat.create(base_attack: 10)
+Item.create(description: description, stat: stat, grid: grid)
 
+description = Description.create(
+  name: "Captian America's Sheild",
+  text: 'Unbreakable!',
+  url: 'https://static.pexels.com/photos/21300/pexels-photo-medium.jpg'
+)
+stat = Stat.create(base_defense: 10)
+Item.create(description: description, stat: stat, grid: grid)
 
+description = Description.create(
+  name: 'Pick of Destiny',
+  text: 'Eternal life, but at what price?',
+  url: 'https://static.pexels.com/photos/8663/drill-bits-medium.jpg'
+)
+stat = Stat.create(base_health: 10, base_defense: -10)
+i = Item.create(description: description, stat: stat, equipped: true, grid: grid)
 
-
-
-
-
-
-
-
+Npc.first.update(items: [i])

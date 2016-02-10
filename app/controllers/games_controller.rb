@@ -33,6 +33,9 @@ class GamesController < ApplicationController
     # Combat
     @engine.battle(player, player.box.npc) if (('a' == action) && player.box.npc)
 
+    # Take item
+    player.take_items(player.box.items) if (!player.box.items.empty? && 't' == action) 
+
     # Lose Game
     return redirect_to games_path if player.stat.dead?
 

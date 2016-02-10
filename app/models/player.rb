@@ -3,6 +3,8 @@ class Player < ActiveRecord::Base
 
   has_one :stat
 
+  has_many :items
+
   after_save :mark_current_box_explored
 
   def move(direction)
@@ -31,6 +33,16 @@ class Player < ActiveRecord::Base
 
   def box
     Box.find(current_box_id)
+  end
+
+  def take_items(items)
+    items.each do |item|
+      item.update(player: self, current_box_id: nil, equipped: true)
+    end
+  end
+
+  def equipped_items
+    Item.where(player: self, equipped: true)
   end
 
   private

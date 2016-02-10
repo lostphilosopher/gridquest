@@ -24,6 +24,10 @@ class Box < ActiveRecord::Base
     Npc.find_by(current_box_id: self.id)
   end
 
+  def items
+    Item.where(current_box_id: self.id)
+  end
+
   private
 
   def populate_default_paths
