@@ -5,6 +5,7 @@ class Box < ActiveRecord::Base
   has_one :description
 
   after_create :populate_default_paths
+  after_create :populate_default_descriptions
 
   def paths_from_grid_boundaries
     paths = ''
@@ -32,5 +33,10 @@ class Box < ActiveRecord::Base
 
   def populate_default_paths
     update(paths: paths_from_grid_boundaries)
+  end
+
+  def populate_default_descriptions
+    description = Description.create(Description.pick_from_json('box'))
+    update(description: description)
   end
 end

@@ -4,16 +4,34 @@ class GamesController < ApplicationController
   def index
   end
 
+  # @todo: REFACTOR!!!
   def new
-    grid = Grid.first
+    # Populate grid and boxes
+    grid = Grid.create(width: 4, length: 4)
+    num = [grid.length, grid.width].min
+
+    # Add NPCs to grid
+    num.times do
+      Npc.create(grid: grid)
+    end
+
+    # Add Items to grid
+    num.times do
+      Item.create(grid: grid)
+    end
+
+    # Create player
     stat = Stat.create(base_health: 10, base_attack: 5, base_defense: 5, current_health: 10)
     player = Player.create(
       name: current_user.email,
       current_box_id: grid.find_by_coordinates(1,1).id,
       stat: stat
     )
-    game = Game.create(grid: grid, player: player)
 
+    # Create game with grid and player
+    game = Game.create(grid: grid, player: player, user: current_user)
+
+    # Begin game
     return redirect_to game_path(id: game.id)
   end
 
@@ -34,7 +52,7 @@ class GamesController < ApplicationController
     @engine.battle(player, player.box.npc) if (('a' == action) && player.box.npc)
 
     # Take item
-    player.take_items(player.box.items) if (!player.box.items.empty? && 't' == action) 
+    player.take_items(player.box.items) if (!player.box.items.empty? && 't' == action)
 
     # Lose Game
     return redirect_to games_path if player.stat.dead?

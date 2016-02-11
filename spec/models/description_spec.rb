@@ -1,5 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Description, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'pick_from_json' do
+    it "has the keys needed for a description object" do
+      ["name", "url", "text"].each do |elem|
+        expect(Description.pick_from_json).to have_key elem
+      end
+    end
+    it "provides accessible strings" do
+      ["name", "url", "text"].each do |elem|
+        expect(Description.pick_from_json[elem]).to be_instance_of String
+      end
+    end
+  end
 end

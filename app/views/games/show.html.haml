@@ -33,7 +33,7 @@
         - else
           There's nothing useful here...
   .row
-    .col-sm-7
+    .col-sm-4
       %h3
         Status
       = "Player: #{@game.player.name}"
@@ -43,7 +43,29 @@
       = "Current health: #{@game.player.stat.current_health}/#{@game.player.stat.base_health}"
       %br
       = "Available Paths: #{@box.paths}"
+
+      %h3
+        Inventory
+      - @game.player.equipped_items.each do |item|
+        = "#{item.description.name} [A: #{item.stat.base_attack} | D: #{item.stat.base_defense}]"
+        %br
+
     .col-sm-5
+      %h3
+        Grid
+      - (1..@game.grid.length).reverse_each do |y|
+        - (1..@game.grid.width).each do |x|
+          - box = @game.grid.find_by_coordinates(x, y)
+          - if @game.player.current_box_id == box.id
+            = "#"
+          - elsif box.explored?
+            X
+          - else
+            ?
+          - if x == @game.grid.width
+            %br
+
+    .col-sm-3
       %h3 Actions
       %strong
         Move

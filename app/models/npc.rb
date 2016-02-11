@@ -5,6 +5,7 @@ class Npc < ActiveRecord::Base
 
   belongs_to :grid
 
+  after_create :populate_default_descriptions
   after_create :place_on_grid
 
   def box
@@ -17,6 +18,13 @@ class Npc < ActiveRecord::Base
   end
 
   private
+
+  def populate_default_descriptions
+    description = Description.create(Description.pick_from_json('npc'))
+    health = rand(1..10)
+    stat = Stat.create(base_health: health, current_health: health, base_attack: rand(1..10), base_defense: rand(1..10))
+    update(description: description, stat: stat)
+  end
 
   def place_on_grid
     return unless self.grid
