@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
+  root to: 'index#index', as: 'unauthenticated_root'
 
-  root 'index#index'
-
-  authenticate :user do
+  authenticated :user do
     resources :games
+    root to: 'games#index', as: 'authenticated_root'
   end
 end
