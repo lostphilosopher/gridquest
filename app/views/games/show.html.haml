@@ -56,12 +56,7 @@
       - (1..@game.grid.length).reverse_each do |y|
         - (1..@game.grid.width).each do |x|
           - box = @game.grid.find_by_coordinates(x, y)
-          - if @game.player.current_box_id == box.id
-            = "#"
-          - elsif box.explored?
-            X
-          - else
-            ?
+          = box.display_character
           - if x == @game.grid.width
             %br
 
