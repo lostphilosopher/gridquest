@@ -1,9 +1,9 @@
 class Player < ActiveRecord::Base
   belongs_to :game
 
-  has_one :stat
+  has_one :stat, dependent: :destroy
 
-  has_many :items
+  has_many :items, dependent: :destroy
 
   after_save :mark_current_box_explored
 

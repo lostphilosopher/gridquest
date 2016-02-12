@@ -2,10 +2,14 @@ class GamesController < ApplicationController
   before_action :set_engine, only: [:edit]
 
   def index
+    @game = Game.find_by(user: current_user)
   end
 
   # @todo: REFACTOR!!!
   def new
+    # Only one active game allowed
+    destroy_previous_game
+
     # Populate grid and boxes
     grid = Grid.create(width: 4, length: 4)
     num = [grid.length, grid.width].min
@@ -59,6 +63,10 @@ class GamesController < ApplicationController
 
     # Continue Game
     return redirect_to game_path(id: game.id)
+  end
+
+  def destroy_previous_game
+    Game.where(user: current_user).destroy_all
   end
 
   private

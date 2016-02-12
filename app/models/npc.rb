@@ -1,6 +1,6 @@
 class Npc < ActiveRecord::Base
-  has_one :description
-  has_one :stat
+  has_one :description, dependent: :destroy
+  has_one :stat, dependent: :destroy
   has_many :items
 
   belongs_to :grid

@@ -1,7 +1,6 @@
-%h1
+%h2
   Games
 
-%h2
-  Create new Game
-
-= link_to 'Start Game', new_game_path
+= link_to 'Start New Game', new_game_path
+= ' | '
+= link_to 'Continue Game', game_path(id: @game.id)

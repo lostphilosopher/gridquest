@@ -2,7 +2,7 @@ class Box < ActiveRecord::Base
   belongs_to :grid
   belongs_to :player
 
-  has_one :description
+  has_one :description, dependent: :destroy
 
   after_create :populate_default_paths
   after_create :populate_default_descriptions

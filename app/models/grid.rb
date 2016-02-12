@@ -1,7 +1,7 @@
 class Grid < ActiveRecord::Base
-  has_many :boxes
-  has_many :npcs
-  has_many :items
+  has_many :boxes, dependent: :destroy
+  has_many :npcs, dependent: :destroy
+  has_many :items, dependent: :destroy
   belongs_to :game
 
   after_create :populate_grid
