@@ -68,6 +68,12 @@ class GamesController < ApplicationController
     # Take item
     player.take_items(player.box.items) if (!player.box.items.empty? && 't' == action)
 
+    # Equip / Unequip item
+    if params[:item_id] && action == 'i'
+      item = Item.find(params[:item_id])
+      item.update(equipped: !item.equipped?)
+    end
+
     # Lose Game
     return redirect_to games_path if player.stat.dead?
 

@@ -49,7 +49,7 @@ RSpec.describe GamesController, type: :controller do
     let!(:game) { FactoryGirl.create(:game, grid: grid, player: player) }
     let!(:npc) { FactoryGirl.create(:npc, current_box_id: grid.find_by_coordinates(1,1).id) }
 
-    context 'when game_action is a movement action (n)' do
+    context 'when game_action is a movement action' do
       before do
         npc.delete
         sign_in user
@@ -62,7 +62,7 @@ RSpec.describe GamesController, type: :controller do
         expect(Player.first.box.y).to eq 2
       end
     end
-    context 'when game_action is an attack action (a)' do
+    context 'when game_action is an attack action' do
       before do
         sign_in user
         get :edit, id: game.id, game_action: SimpleEngine::COMBAT_ACTIONS[1]
@@ -70,6 +70,19 @@ RSpec.describe GamesController, type: :controller do
       it { should respond_with :redirect }
       it { should redirect_to game_path(id: Game.first.id) }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
+    end
+    context 'when action is an unequip action' do
+      let!(:item) { FactoryGirl.create(:item, equipped: false) }
+      let(:status) { item.equipped? }
+      before do
+        sign_in user
+        #item.update(player: player, current_box_id: nil, equipped: true)
+        get :edit, id: game.id, game_action: 'i', item_id: item.id
+      end
+      it { should respond_with :redirect }
+      it { should redirect_to game_path(id: Game.first.id) }
+      it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
+      #it { expect(item.equipped?).to eq true }
     end
   end
 end
