@@ -8,8 +8,7 @@ gem 'devise', '3.5.3'
 gem 'haml-rails', '~> 0.9'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -45,6 +44,8 @@ group :development, :test do
   gem 'shoulda-matchers', '2.8.0'
   # Code coverage tool
   gem 'simplecov', '~> 0.11.2'
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'
   # Use pry for debugging
   gem 'pry-rails', '0.3.4'
   # Use RSpec for testing
@@ -56,4 +57,11 @@ group :development do
   gem 'spring'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+end
+
+group :production do
+  # Use postgres as the production database for Active Record
+  gem 'pg'
+  # SOURCE: https://devcenter.heroku.com/articles/getting-started-with-rails4#heroku-gems
+  gem 'rails_12factor'
 end
