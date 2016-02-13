@@ -6,7 +6,7 @@ namespace :file_grabber do
       ds = Description.read_from_json(i)
       ds.each do |d|
         f = open(d['url'])
-        FileUtils.cp f, "app/assets/images/#{d['name']}"
+        FileUtils.cp f, "app/assets/images/#{d['name'].gsub(/[^0-9a-z]/i, '')}.jpg"
       end
     end
   end
