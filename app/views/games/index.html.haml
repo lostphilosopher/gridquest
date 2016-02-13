@@ -2,5 +2,5 @@
   Games
 
 = link_to 'Start New Game', new_game_path
-= ' | '
+= ' | ' if @game
 = link_to 'Continue Game', game_path(id: @game.id) if @game
