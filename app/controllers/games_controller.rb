@@ -25,7 +25,7 @@ class GamesController < ApplicationController
     end
 
     # Create player
-    stat = Stat.create(base_health: 10, base_attack: 5, base_defense: 5, current_health: 10)
+    stat = Stat.create(base_health: 10, base_attack: rand(1..10), base_defense: rand(1..10), current_health: 10)
     player = Player.create(
       name: current_user.email,
       current_box_id: grid.find_by_coordinates(1,1).id,
