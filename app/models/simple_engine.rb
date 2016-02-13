@@ -2,14 +2,22 @@
 class SimpleEngine < Engine
   BASE_NUMBER = 20
 
-  def battle(player, npc)
-    # Player vs NPC
-    round(player, npc)
-    return if npc.stat.current_health == 0
+  COMBAT_ACTIONS = %w(heavy_attack quick_attack defend)
 
-    # If NPC survives NPC vs Player
-    round(npc, player)
+  # :nocov:
+  def battle(action, player, npc)
+    # Determine order of combat
+    combatant_1 = first_striker(action, player, npc)
+    combatant_2 = (player.id == combatant_1.id) ? npc : player
+
+    # Fight!
+    round(combatant_1, combatant_2)
+    return if combatant_2.stat.current_health == 0
+
+    # If the second to strike is stil around, give them the opportunity
+    round(combatant_2, combatant_1)
   end
+  # :nocov:
 
   def round(combatant_1, combatant_2)
     # combatant_1 always strikes first
@@ -18,7 +26,34 @@ class SimpleEngine < Engine
     combatant_2.stat.update(current_health: resulting_health) if damage > 0
   end
 
+  def first_striker(action, player, npc)
+    #@todo: Ensure that player and npc are Player and Npc instances
+    # Rock, Paper, Scissors
+    npc_action = pick_npc_action
+    if action == COMBAT_ACTIONS[npc_action]
+      # @todo: How to handle draw???
+      #        - retry?
+      #        - player? npc?
+      #        - higher base_attack?
+      first_striker(action, player, npc)
+    elsif action == COMBAT_ACTIONS[npc_action - 1]
+      return npc
+    else
+      return player
+    end
+  end
+
+  def run(player, npc)
+    npc_action = pick_npc_action
+    round(npc, player) if 'quick_attack'
+    player.run
+  end
+
   private
+
+  def pick_npc_action
+    rand(3)
+  end
 
   def self.attack(character)
     [0, character.stat.base_attack + SimpleEngine.items_attack_modifier(character.equipped_items)].max
@@ -31,7 +66,7 @@ class SimpleEngine < Engine
   def self.items_health_modifier(items)
     base = 0
     items.each do |i|
-      base =+ i.stat.base_health
+      base += i.stat.base_health
     end
     base
   end
@@ -47,7 +82,7 @@ class SimpleEngine < Engine
   def self.items_defense_modifier(items)
     base = 0
     items.each do |i|
-      base =+ i.stat.base_defense
+      base += i.stat.base_defense
     end
     base
   end

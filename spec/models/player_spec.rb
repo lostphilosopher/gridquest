@@ -62,4 +62,20 @@ RSpec.describe Player, type: :model do
       end
     end
   end
+
+  describe '.take_items' do
+    let!(:player) { FactoryGirl.create(:player) }
+    let!(:item) { FactoryGirl.create(:item) }
+    it "equips the item in the player's inventory" do
+      player.take_items([item])
+      expect(player.equipped_items).to include item
+    end
+  end
+
+  describe '.random_path' do
+    let!(:grid) { FactoryGirl.create(:grid) }
+    let(:box) { Box.first }
+    let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }
+    it { expect('nsew').to include player.random_path }
+  end
 end

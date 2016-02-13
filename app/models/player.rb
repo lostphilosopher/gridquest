@@ -7,6 +7,14 @@ class Player < ActiveRecord::Base
 
   after_save :mark_current_box_explored
 
+  def run
+    move(random_path)
+  end
+
+  def random_path
+    self.box.paths.split(//).sample
+  end
+
   def move(direction)
     update_position_by_direction(direction) if self.box.paths.include? direction
   end

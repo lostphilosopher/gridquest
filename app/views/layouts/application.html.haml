@@ -12,12 +12,7 @@
         .col-xs-10.col-xs-offset-1
           %h1 Quenzar's Grids
           %hr
-            .text-right
-              = link_to('Exit', destroy_user_session_path, method: :delete) if current_user
-              = ' | ' if current_user
-              = link_to('Home', games_path) if current_user
-              = ' | ' if @game
-              = link_to('New Game', new_game_path) if @game
-              = link_to('Home', unauthenticated_root_path) unless current_user
+            .inline
+              = render 'partials/nav'
           %hr
           = yield

@@ -1,0 +1,17 @@
+.nav
+  .navbar-left
+    - if current_user
+      = "Hello, #{current_user.email}"
+
+  .navbar-right
+    = link_to('Home', root_path)
+    - if current_user
+      |
+      = link_to('Games', games_path)
+      |
+      = link_to('Sign out', destroy_user_session_path, method: :delete)
+    - else
+      |
+      = link_to 'Sign Up', new_user_registration_path
+      |
+      = link_to 'Sign In', new_user_session_path

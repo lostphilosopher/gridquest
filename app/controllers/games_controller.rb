@@ -44,16 +44,26 @@ class GamesController < ApplicationController
     @box = Box.find(@game.player.current_box_id)
   end
 
+  # @todo: REFACTOR!!!
   def edit
     game = Game.find(params[:id])
     action = params[:game_action]
     player = game.player
+    # @todo: Consider "GuaranteedAnimal"
+    if player.box.npc && !player.box.npc.stat.dead?
+      npc = player.box.npc
+    else
+      npc = nil
+    end
 
-    # Movement
-    player.move(action) if ('nsew'.include? action)
+    # Run away! Always an option.
+    @engine.run(player, npc) if action == 'run'
+
+    # Movement: Can only be done to vaild paths, and when enemies aren't present
+    player.move(action) if (('nsew'.include? action) && npc.nil?)
 
     # Combat
-    @engine.battle(player, player.box.npc) if (('a' == action) && player.box.npc)
+    @engine.battle(action, player, player.box.npc) if ((SimpleEngine::COMBAT_ACTIONS.include? action) && npc)
 
     # Take item
     player.take_items(player.box.items) if (!player.box.items.empty? && 't' == action)

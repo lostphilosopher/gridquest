@@ -51,6 +51,7 @@ RSpec.describe GamesController, type: :controller do
 
     context 'when game_action is a movement action (n)' do
       before do
+        npc.delete
         sign_in user
         get :edit, id: game.id, game_action: 'n'
       end
@@ -64,14 +65,11 @@ RSpec.describe GamesController, type: :controller do
     context 'when game_action is an attack action (a)' do
       before do
         sign_in user
-        get :edit, id: game.id, game_action: 'a'
+        get :edit, id: game.id, game_action: SimpleEngine::COMBAT_ACTIONS[1]
       end
       it { should respond_with :redirect }
       it { should redirect_to game_path(id: Game.first.id) }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
-      it 'changes the player\'s current location to be y + 1' do
-        expect(Npc.first.stat.current_health).to eq 0
-      end
     end
   end
 end
