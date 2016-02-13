@@ -21,8 +21,3 @@
               = link_to('Home', unauthenticated_root_path) unless current_user
           %hr
           = yield
-
-    - if @game
-      #spacer
-      #footer.hidden-lg.hidden-md.hidden-sm
-        = render 'actions'
