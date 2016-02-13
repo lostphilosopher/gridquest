@@ -3,4 +3,4 @@
 
 = link_to 'Start New Game', new_game_path
 = ' | '
-= link_to 'Continue Game', game_path(id: @game.id)
+= link_to 'Continue Game', game_path(id: @game.id) if @game
