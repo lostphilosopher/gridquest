@@ -1,0 +1,8 @@
+- if @box.npc && !@box.npc.stat.dead?
+  = image_tag @box.npc.description.image, class: 'img img-responsive'
+  %strong
+    = @box.npc.description.name
+  %br
+  = @box.npc.description.text
+  %br
+  = "NPC current health: #{@box.npc.stat.current_health}/#{@box.npc.stat.base_health}"

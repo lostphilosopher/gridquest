@@ -1,41 +1,19 @@
-%h2
-  Current Game
-
 .container-fluid
   .row
-    .col-sm-7
-      %h3 Description
-      = @box.description.text
-      = image_tag @box.description.image, class: 'img img-responsive'
-    .col-sm-5
-      %h3 NPCs
-      - if @box.npc && !@box.npc.stat.dead?
-        %strong
-          = @box.npc.description.name
-        %p
-          = @box.npc.description.text
-        = image_tag @box.npc.description.image, class: 'img img-responsive'
-        %br
-          = "NPC current health: #{@box.npc.stat.current_health}"
-      - else
-        None
-      %h3 Items
-      - if @box.npc && !@box.npc.stat.dead?
-        Defeat the NPC to see what's in this room!
-      - else
-        - if !@box.items.empty?
-          - @box.items.each do |item|
-            = "#{item.description.name}: #{item.description.text}"
-            %br
-            = image_tag item.description.image, class: 'img img-responsive'
-            %br
-            = link_to "Take: #{item.description.name}", edit_game_path(id: @game.id, game_action: 't')
-        - else
-          There's nothing useful here...
+    .col-md-3
+      .text-center.hidden-sm.hidden-xs
+        = render 'grid'
+    .col-md-6
+      = render 'box'
+    .col-md-3
+      = render 'npc'
+      = render 'item'
+
   .row
     .col-sm-4
-      %h3
+      %strong
         Status
+      %br
       = "Player: #{@game.player.name}"
       %br
       = "Current position: (#{@box.x}, #{@box.y})"
@@ -43,16 +21,15 @@
       = "Current health: #{@game.player.stat.current_health}/#{@game.player.stat.base_health}"
       %br
       = "Available Paths: #{@box.paths}"
-
-      %h3
+      %br
+      %strong
         Inventory
+      %br
       - @game.player.equipped_items.each do |item|
         = "#{item.description.name} [A: #{item.stat.base_attack} | D: #{item.stat.base_defense}]"
         %br
 
     .col-sm-5
-      %h3
-        Grid
       - (1..@game.grid.length).reverse_each do |y|
         - (1..@game.grid.width).each do |x|
           - box = @game.grid.find_by_coordinates(x, y)
@@ -61,9 +38,8 @@
             %br
 
     .col-sm-3
-      %h3 Actions
       %strong
-        Move
+        Actions
       %br
       = link_to 'North', edit_game_path(id: @game.id, game_action: 'n')
       %br

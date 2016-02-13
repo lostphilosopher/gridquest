@@ -11,7 +11,7 @@ class GamesController < ApplicationController
     destroy_previous_game
 
     # Populate grid and boxes
-    grid = Grid.create(width: 4, length: 4)
+    grid = Grid.create(width: 10, length: 10)
     num = [grid.length, grid.width].min
 
     # Add NPCs to grid

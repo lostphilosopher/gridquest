@@ -1,0 +1,15 @@
+%strong
+  Items
+%br
+- if @box.npc && !@box.npc.stat.dead?
+  Defeat the NPC to see what's in this room!
+- else
+  - if !@box.items.empty?
+    - @box.items.each do |item|
+      = "#{item.description.name}: #{item.description.text}"
+      %br
+      = image_tag item.description.image, class: 'img img-responsive'
+      %br
+      = link_to "Take: #{item.description.name}", edit_game_path(id: @game.id, game_action: 't')
+  - else
+    There's nothing useful here...
