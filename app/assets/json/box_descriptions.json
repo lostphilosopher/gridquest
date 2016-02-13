@@ -1,126 +1,139 @@
 [
   {
     "name": "Winding stairway",
+    "file_path": "Windingstairway",
     "url": "https://pixabay.com/static/uploads/photo/2016/01/12/16/47/vatican-1136071__340.jpg",
     "text": "You are in a winding stairway. Where does it end? Does it?"
   },
   {
     "name": "Empty street",
+    "file_path": "Emptystreet",
     "url": "https://pixabay.com/static/uploads/photo/2015/09/21/13/17/road-949832__340.jpg",
     "text": "You stand between two rows of shops. One row sells things you don't need, the other things you don't want."
   },
   {
     "name": "Wooded bridge",
-    "url": "https://pixabay.com/static/uploads/photo/2012/06/19/10/35/black-and-white-50272__340.jpg",
-    "text": "You find yourself at the enterance to a bridge to no where."
-  },
-  {
-    "name": "Wooded bridge",
+    "file_path": "Woodedbridge",
     "url": "https://pixabay.com/static/uploads/photo/2012/06/19/10/35/black-and-white-50272__340.jpg",
     "text": "You find yourself at the enterance to a bridge to no where."
   },
   {
     "name": "Steel jungle",
+    "file_path": "Steeljungle",
     "url": "https://pixabay.com/static/uploads/photo/2014/08/09/11/34/architecture-414035__340.jpg",
     "text": "Twists of steel, broken dreams, and you."
   },
   {
     "name": "Stairway to the sky",
+    "file_path": "Stairwaytothesky",
     "url": "https://pixabay.com/static/uploads/photo/2012/11/01/05/36/stairs-63747__340.jpg",
     "text": "Before you is a stairway to the sky, leading deeper into the darkeness."
   },
   {
     "name": "Spider's web",
+    "file_path": "Spidersweb",
     "url": "https://pixabay.com/static/uploads/photo/2013/07/25/01/33/cobweb-166739__340.jpg",
     "text": "You stop just short of forever entangling yourself in a spiders web."
   },
   {
     "name": "Bridge of seas",
+    "file_path": "Bridgeofseas",
     "url": "https://pixabay.com/static/uploads/photo/2014/06/21/14/26/sea-of-fog-373782__340.jpg",
     "text": "The legends are true. You can dance across the seas to music of the devil."
   },
   {
     "name": "Mountain of heaven",
-    "url": "https://pixabay.com/static/uploads/photo/2014/10/07/19/03/suns-rays-478249__340.jpg",
-    "text": "The heavens open and reveal a mountain of beauty and expanse."
-  },
-  {
-    "name": "Mountain of heaven",
+    "file_path": "Mountainofheaven",
     "url": "https://pixabay.com/static/uploads/photo/2014/10/07/19/03/suns-rays-478249__340.jpg",
     "text": "The heavens open and reveal a mountain of beauty and expanse."
   },
   {
     "name": "Electric village",
+    "file_path": "Electricvillage",
     "url": "https://pixabay.com/static/uploads/photo/2014/11/30/19/47/lightning-552038__340.jpg",
     "text": "No one lives here anymore, not even you."
   },
   {
     "name": "Empty amusement",
+    "file_path": "Emptyamusement",
     "url": "https://pixabay.com/static/uploads/photo/2012/07/23/14/28/tiger-and-turtle-52691__340.jpg",
     "text": "There is no joy here. Only decay. And even that, is falling apart."
   },
   {
     "name": "Temple of the cold",
+    "file_path": "Templeofthecold",
     "url": "https://pixabay.com/static/uploads/photo/2016/01/20/19/56/birch-1152246__340.jpg",
     "text": "All hail the ice. Long live the frost. Glory to the frozen death that awaits us all."
   },
   {
     "name": "Sea of woe",
+    "file_path": "Seaofwoe",
     "url": "https://pixabay.com/static/uploads/photo/2016/01/20/19/56/birch-1152246__340.jpg",
     "text": "It is said that the tears of a thousand widows made this sea. Odd that it is so small."
   },
   {
     "name": "Headstone of hate",
+    "file_path": "Headstoneofhate",
     "url": "https://pixabay.com/static/uploads/photo/2014/09/23/23/43/cemetery-458337__340.jpg",
     "text": "Here is buried the sourge of seven generations. The butcher of peace. The master of despair. (Or his killer.)"
   },
   {
     "name": "Endless waterfall",
+    "file_path": "Endlesswaterfall",
     "url": "https://pixabay.com/static/uploads/photo/2015/12/08/00/51/waterfall-1082109__340.jpg",
     "text": "Water rushes around you on all side. Surely this basin won't be filled today?"
   },
   {
     "name": "Underground maze",
+    "file_path": "Undergroundmaze",
     "url": "https://pixabay.com/static/uploads/photo/2015/09/28/14/18/black-and-white-962153__340.jpg",
     "text": "You find yourself lost in a maze of layers and mysteries."
   },
   {
     "name": "Beach of despair",
+    "file_path": "Beachofdespair",
     "url": "https://pixabay.com/static/uploads/photo/2015/09/28/14/18/black-and-white-962153__340.jpg",
     "text": "Here your dreams crash against the rocks."
   },
   {
     "name": "Abandonded mansion",
+    "file_path": "Abandondedmansion",
     "url": "https://pixabay.com/static/uploads/photo/2015/09/28/14/18/black-and-white-962153__340.jpg",
     "text": "Such beauty, such wealth! Such waste."
   },
   {
     "name": "Temple of man",
+    "file_path": "Templeofman",
     "url": "https://pixabay.com/static/uploads/photo/2015/09/12/00/46/museum-936596__340.jpg",
     "text": "What kind of god builds a temple to himself?"
   },
   {
     "name": "Fortress of Virtue",
+    "file_path": "FortressofVirtue",
     "url": "https://pixabay.com/static/uploads/photo/2015/03/26/09/54/building-690564__340.jpg",
     "text": "The last bastion of the civilized order fell long ago to mutiny."
   },
   {
     "name": "Chapel of Old",
+    "file_path": "ChapelofOld",
     "url": "https://pixabay.com/static/uploads/photo/2015/11/09/03/50/adobe-1034650__340.jpg",
     "text": "You stand before an ancient chapel. You don't dare ask the monks who they pray to. Nor they you what you're praying for."
   },
   {
     "name": "Old woods",
+    "file_path": "Oldwoods",
     "url": "https://pixabay.com/static/uploads/photo/2015/09/02/12/32/mystic-918502__340.jpg",
     "text": "These are not the first woods you've been lost in. They are likely the last."
   },
   {
     "name": "Castle Nigh",
+    "file_path": "CastleNigh",
     "url": "https://pixabay.com/static/uploads/photo/2015/05/06/19/31/castle-755663__340.jpg",
     "text": "Doors welcome, gates warn, castles threaten."
   },
   {
     "name": "The hall of forgetten victories",
+    "file_path": "Thehallofforgettenvictories",
     "url": "https://pixabay.com/static/uploads/photo/2015/04/20/13/20/architecture-731234__340.jpg",
     "text": "This celebrates the deaths of those who died preserving a way of life long forgotten."
   }

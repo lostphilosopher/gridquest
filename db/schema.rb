@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210052208) do
+ActiveRecord::Schema.define(version: 20160213032508) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20160210052208) do
     t.integer  "box_id"
     t.integer  "npc_id"
     t.integer  "item_id"
+    t.string   "file_path"
   end
 
   add_index "descriptions", ["box_id"], name: "index_descriptions_on_box_id"

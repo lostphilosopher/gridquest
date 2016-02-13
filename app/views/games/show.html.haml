@@ -6,7 +6,7 @@
     .col-sm-7
       %h3 Description
       = @box.description.text
-      = image_tag @box.description.url, class: 'img img-responsive'
+      = image_tag @box.description.image, class: 'img img-responsive'
     .col-sm-5
       %h3 NPCs
       - if @box.npc && !@box.npc.stat.dead?
@@ -14,7 +14,7 @@
           = @box.npc.description.name
         %p
           = @box.npc.description.text
-        = image_tag @box.npc.description.url, class: 'img img-responsive'
+        = image_tag @box.npc.description.image, class: 'img img-responsive'
         %br
           = "NPC current health: #{@box.npc.stat.current_health}"
       - else
@@ -27,7 +27,7 @@
           - @box.items.each do |item|
             = "#{item.description.name}: #{item.description.text}"
             %br
-            = image_tag item.description.url, class: 'img img-responsive'
+            = image_tag item.description.image, class: 'img img-responsive'
             %br
             = link_to "Take: #{item.description.name}", edit_game_path(id: @game.id, game_action: 't')
         - else
