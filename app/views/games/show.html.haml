@@ -1,7 +1,7 @@
 .container-fluid
   .row
     .col-md-3
-      .text-center.hidden-sm.hidden-xs
+      .hidden-xs.hidden-sm
         = render 'grid'
     .col-md-6
       = render 'box'
@@ -9,46 +9,18 @@
       = render 'npc'
       = render 'item'
 
+  %hr
+  .hidden-xs.visible-sm-block.hidden-md.hidden-lg
+    = render 'actions'
+    %hr
+
   .row
-    .col-sm-4
-      %strong
-        Status
-      %br
-      = "Player: #{@game.player.name}"
-      %br
-      = "Current position: (#{@box.x}, #{@box.y})"
-      %br
-      = "Current health: #{@game.player.stat.current_health}/#{@game.player.stat.base_health}"
-      %br
-      = "Available Paths: #{@box.paths}"
-      %br
-      %strong
-        Inventory
-      %br
-      - @game.player.equipped_items.each do |item|
-        = "#{item.description.name} [A: #{item.stat.base_attack} | D: #{item.stat.base_defense}]"
-        %br
-
-    .col-sm-5
-      - (1..@game.grid.length).reverse_each do |y|
-        - (1..@game.grid.width).each do |x|
-          - box = @game.grid.find_by_coordinates(x, y)
-          = box.display_character
-          - if x == @game.grid.width
-            %br
-
     .col-sm-3
-      %strong
-        Actions
-      %br
-      = link_to 'North', edit_game_path(id: @game.id, game_action: 'n')
-      %br
-      = link_to 'West', edit_game_path(id: @game.id, game_action: 'w')
-      = link_to 'East', edit_game_path(id: @game.id, game_action: 'e')
-      %br
-      = link_to 'South', edit_game_path(id: @game.id, game_action: 's')
-      %br
-      %strong
-        Attack
-      %br
-      = link_to 'Attack', edit_game_path(id: @game.id, game_action: 'a')
+      = render 'status'
+    .col-sm-6
+      .visible-xs-block.visible-sm-block.hidden-md.hidden-lg
+        = render 'grid'
+      .hidden-xs.hidden-sm.visible-md-block.visible-lg-block
+        = render 'actions'
+    .col-sm-3
+      = render 'inventory'

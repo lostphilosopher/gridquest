@@ -1,22 +1,25 @@
-- (1..@game.grid.length).reverse_each do |y|
-  - (1..@game.grid.width).each do |x|
-    - box = @game.grid.find_by_coordinates(x, y)
-    = box.display_character
-    - if x == @game.grid.width
-      %br
-%hr
-%strong
-  @:
-You
-%strong
-  E:
-Enemy
-%strong
-  I:
-Item
-%strong
-  ?:
-Unexplored
-%strong
-  X:
-Explored
+.text-center
+  - (1..@game.grid.length).reverse_each do |y|
+    - (1..@game.grid.width).each do |x|
+      - box = @game.grid.find_by_coordinates(x, y)
+      = box.display_character
+      - if x == @game.grid.width
+        %br
+  %hr
+  %strong
+    @:
+  You
+  %strong
+    E:
+  Enemy
+  %strong
+    I:
+  Item
+  %strong
+    ?:
+  Unexplored
+  %strong
+    X:
+  Explored
+  %br
+  %br

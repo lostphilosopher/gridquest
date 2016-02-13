@@ -1,0 +1,36 @@
+.container-fluid.text-center
+  .row
+    .col-xs-5.col-xs-offset-1
+    .col-xs-5.text-right
+      - if @box.npc && !@box.npc.stat.dead?
+        = link_to 'Attack', edit_game_path(id: @game.id, game_action: 'a')
+      - else
+        Attack
+  .row
+    .col-xs-2.col-xs-offset-3
+    .col-xs-2
+      - if @box.paths.include? 'n'
+        = link_to 'North', edit_game_path(id: @game.id, game_action: 'n')
+      - else
+        North
+    .col-xs-2
+  .row
+    .col-xs-2.col-xs-offset-3
+      - if @box.paths.include? 'w'
+        = link_to 'West', edit_game_path(id: @game.id, game_action: 'w')
+      - else
+        West
+    .col-xs-2
+    .col-xs-2
+      - if @box.paths.include? 'e'
+        = link_to 'East', edit_game_path(id: @game.id, game_action: 'e')
+      - else
+        East
+  .row
+    .col-xs-2.col-xs-offset-3
+    .col-xs-2
+      - if @box.paths.include? 's'
+        = link_to 'South', edit_game_path(id: @game.id, game_action: 's')
+      - else
+        South
+    .col-xs-2

@@ -1,0 +1,11 @@
+%strong
+  Inventory
+%br
+- if !@game.player.equipped_items.empty?
+  - @game.player.equipped_items.each do |item|
+    = "#{item.description.name}"
+    %br
+    = "[A: #{item.stat.base_attack} | D: #{item.stat.base_defense}]"
+    %br
+- else
+  None...

@@ -39,7 +39,7 @@ class SimpleEngine < Engine
   def self.items_attack_modifier(items)
     base = 0
     items.each do |i|
-      base =+ i.stat.base_attack
+      base += i.stat.base_attack
     end
     base
   end

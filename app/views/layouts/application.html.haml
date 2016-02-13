@@ -20,9 +20,8 @@
               = link_to('New Game', new_game_path) if @game
           %hr
           = yield
-          %hr
-            = link_to('Exit', destroy_user_session_path, method: :delete) if current_user
-            = ' | ' if current_user
-            = link_to('Home', games_path) if current_user
-            = ' | ' if @game
-            = link_to('New Game', new_game_path) if @game
+
+    - if @game
+      #spacer
+      #footer.hidden-lg.hidden-md.hidden-sm
+        = render 'actions'

@@ -1,0 +1,10 @@
+%strong
+  Status
+%br
+= "Health: #{@game.player.stat.current_health}/#{@game.player.stat.base_health}"
+%br
+= "Attack: #{SimpleEngine.attack(@game.player)}/#{@game.player.stat.base_attack}"
+%br
+= "Defense: #{SimpleEngine.defense(@game.player)}/#{@game.player.stat.base_defense}"
+%br
+%br
