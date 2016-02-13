@@ -43,6 +43,25 @@ class Box < ActiveRecord::Base
     end
   end
 
+  def find_by_current_and_direction(current_box_id, direction)
+    x = Box.find(current_box_id).x
+    y = Box.find(current_box_id).y
+
+    case direction
+    when 'n'
+      y = y + 1
+    when 's'
+      y = y - 1
+    when 'e'
+      x = x + 1
+    when 'w'
+      x = x - 1
+    else
+    end
+
+    self.grid.find_by_coordinates(x, y)
+  end
+
   private
 
   def populate_default_paths

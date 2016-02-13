@@ -72,6 +72,17 @@ RSpec.describe Player, type: :model do
     end
   end
 
+  describe '.run' do
+    let!(:grid) { FactoryGirl.create(:grid) }
+    let(:box) { Box.first }
+    let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }
+    it 'moves the player anywhere other than where they are' do
+      old_position = player.current_box_id
+      player.run
+      expect(player.current_box_id).not_to eq old_position
+    end
+  end
+
   describe '.random_path' do
     let!(:grid) { FactoryGirl.create(:grid) }
     let(:box) { Box.first }

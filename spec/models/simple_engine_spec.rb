@@ -46,10 +46,12 @@ RSpec.describe SimpleEngine, type: :model do
   end
 
   describe 'first_striker' do
-    it 'returns either the player or the npc' do
-      actual = @foo.first_striker(SimpleEngine::COMBAT_ACTIONS[1], player, npc)
-      expected = [player, npc]
-      expect(expected).to include actual
+    9.times do
+      it 'returns either the player or the npc' do
+        actual = @foo.first_striker(SimpleEngine::COMBAT_ACTIONS[1], player, npc)
+        expected = [player, npc]
+        expect(expected).to include actual
+      end
     end
   end
 
@@ -80,6 +82,22 @@ RSpec.describe SimpleEngine, type: :model do
     it 'adds the base stat from each item' do
       expected = item_1.stat.base_defense + item_2.stat.base_defense
       expect(SimpleEngine.items_defense_modifier(items)).to eq expected
+    end
+  end
+
+  describe '.run' do
+    let!(:grid) { FactoryGirl.create(:grid) }
+    let!(:box) { Box.first }
+    it 'puts the player on a new square' do
+      player.update(
+        current_box_id: box.id
+      )
+      player.stat.update(
+        current_health: 100000
+      )
+      old_box_id = player.current_box_id
+      @foo.run(player, npc)
+      expect(player.current_box_id).not_to eq old_box_id
     end
   end
 end
