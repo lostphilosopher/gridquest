@@ -32,6 +32,22 @@ RSpec.describe SimpleEngine, type: :model do
   #   end
   # end
 
+  describe '.award_xp' do
+    context 'when the npc is dead' do
+      it "adds the npc's level to the player's xp" do
+        npc.stat.update(current_health: 0)
+        @foo.award_xp(player, npc)
+        expect(player.stat.xp).to eq npc.stat.level
+      end
+    end
+    context 'when the npc is alive' do
+      it "does not add xp to player" do
+        @foo.award_xp(player, npc)
+        expect(player.stat.xp.to_i).to eq 0
+      end
+    end
+  end
+
   describe '.round' do
     it 'if the player strikes first they win' do
       player.stat.update(base_attack: 10000)

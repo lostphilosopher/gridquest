@@ -4,6 +4,8 @@ class SimpleEngine < Engine
 
   COMBAT_ACTIONS = %w(heavy_attack quick_attack defend)
 
+  # @todo: @player @npc
+
   # :nocov:
   def battle(action, player, npc)
     # Determine order of combat
@@ -12,12 +14,22 @@ class SimpleEngine < Engine
 
     # Fight!
     round(combatant_1, combatant_2)
+    # Award XP
+    award_xp(player, npc)
+
     return if combatant_2.stat.current_health == 0
 
     # If the second to strike is stil around, give them the opportunity
     round(combatant_2, combatant_1)
+    # Award XP
+    award_xp(player, npc)
   end
   # :nocov:
+
+  def award_xp(player, npc)
+    return unless npc.stat.dead?
+    player.stat.update(xp: (npc.stat.level.to_i + player.stat.xp.to_i))
+  end
 
   def round(combatant_1, combatant_2)
     # combatant_1 always strikes first

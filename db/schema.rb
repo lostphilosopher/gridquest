@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160213032508) do
+ActiveRecord::Schema.define(version: 20160214145659) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20160213032508) do
     t.integer  "player_id"
     t.integer  "npc_id"
     t.integer  "item_id"
+    t.integer  "xp"
   end
 
   add_index "stats", ["item_id"], name: "index_stats_on_item_id"
