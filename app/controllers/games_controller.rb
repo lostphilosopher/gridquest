@@ -5,7 +5,7 @@ class GamesController < ApplicationController
     @game = Game.find_by(user: current_user)
   end
 
-  # @todo: REFACTOR!!!
+  # @todo REFACTOR!!!
   def new
     # Only one active game allowed
     destroy_previous_game
@@ -44,7 +44,7 @@ class GamesController < ApplicationController
     @box = Box.find(@game.player.current_box_id)
   end
 
-  # @todo: REFACTOR!!!
+  # @todo REFACTOR!!!
   def edit
     game = Game.find(params[:id])
     action = params[:game_action]
@@ -74,20 +74,28 @@ class GamesController < ApplicationController
       item.update(equipped: !item.equipped?)
     end
 
-    # Lose Game
-    return redirect_to games_path if player.stat.dead?
+    # Has a victory or loss condition been meet?
+    return redirect_to defeat_game_path(id: game.id) if player.stat.dead?
+    # return redirect_to victory_game_path if @todo
 
     # Continue Game
     return redirect_to game_path(id: game.id)
   end
 
-  def destroy_previous_game
-    Game.where(user: current_user).destroy_all
+  def defeat
+    game = Game.find(params[:id])
+    return redirect_to game_path(id: game.id) unless game.player.stat.dead?
+    @message = Description.find(game.defeat_description_id).text
+    destroy_previous_game
   end
 
   private
 
   def set_engine
     @engine = SimpleEngine.new
+  end
+
+  def destroy_previous_game
+    Game.where(user: current_user).destroy_all
   end
 end
