@@ -21,6 +21,10 @@ class Box < ActiveRecord::Base
     explored
   end
 
+  def locked?
+    locked
+  end
+
   def npc
     Npc.find_by(current_box_id: self.id)
   end
@@ -32,6 +36,8 @@ class Box < ActiveRecord::Base
   def display_character
     if self.id == self.grid.game.player.current_box_id
       '@'
+    elsif explored? && locked?
+      'L'
     elsif !explored?
       '?'
     elsif self.npc && !self.npc.stat.dead?

@@ -11,16 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160214233242) do
+ActiveRecord::Schema.define(version: 20160215025735) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
     t.integer  "y"
     t.string   "paths"
     t.boolean  "explored"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "grid_id"
+    t.boolean  "locked",     default: false, null: false
   end
 
   add_index "boxes", ["grid_id"], name: "index_boxes_on_grid_id"
@@ -70,6 +71,7 @@ ActiveRecord::Schema.define(version: 20160214233242) do
     t.integer  "player_id"
     t.integer  "npc_id"
     t.integer  "grid_id"
+    t.integer  "opens_box_id"
   end
 
   add_index "items", ["grid_id"], name: "index_items_on_grid_id"

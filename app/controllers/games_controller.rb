@@ -32,6 +32,21 @@ class GamesController < ApplicationController
       stat: stat
     )
 
+    # Set up the end room
+    x = rand(2..grid.width)
+    y = rand(2..grid.length)
+    box = grid.find_by_coordinates(x, y)
+    box.update(locked: true)
+    d = Description.create(name: 'Skeleton Key', text: 'This key will open the door to your nightmares.')
+    item = Item.create(grid: grid)
+    item.update(description: d)
+    d = Description.create(name: 'Famine', text: 'A horseman of the Apocolypse.')
+    npc = Npc.create(grid: grid)
+    npc.update(current_box_id: box.id, description: d)
+    h = rand(10..20)
+    npc.stat.update(base_health: h, base_attack: rand(10..20), base_defense: rand(10..20), current_health: h)
+    item.update(opens_box_id: box.id)
+
     # Create game with grid and player
     game = Game.create(grid: grid, player: player, user: current_user)
 
@@ -88,6 +103,13 @@ class GamesController < ApplicationController
     @message = Description.find(game.defeat_description_id).text
     destroy_previous_game
   end
+
+  # def victory
+  #   game = Game.find(params[:id])
+  #   return redirect_to game_path(id: game.id) unless game.player.stat.dead?
+  #   @message = Description.find(game.victory_description_id).text
+  #   destroy_previous_game
+  # end
 
   private
 
