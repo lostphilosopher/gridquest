@@ -37,6 +37,7 @@ class GamesController < ApplicationController
     y = rand(2..grid.length)
     box = grid.find_by_coordinates(x, y)
     box.update(locked: true)
+    grid.update(victory_box_id: box.id)
     d = Description.create(name: 'Skeleton Key', text: 'This key will open the door to your nightmares.')
     item = Item.create(grid: grid)
     item.update(description: d)
@@ -91,7 +92,7 @@ class GamesController < ApplicationController
 
     # Has a victory or loss condition been meet?
     return redirect_to defeat_game_path(id: game.id) if player.stat.dead?
-    # return redirect_to victory_game_path if @todo
+    return redirect_to victory_game_path(id: game.id) if game.victory?
 
     # Continue Game
     return redirect_to game_path(id: game.id)
@@ -104,12 +105,12 @@ class GamesController < ApplicationController
     destroy_previous_game
   end
 
-  # def victory
-  #   game = Game.find(params[:id])
-  #   return redirect_to game_path(id: game.id) unless game.player.stat.dead?
-  #   @message = Description.find(game.victory_description_id).text
-  #   destroy_previous_game
-  # end
+  def victory
+    game = Game.find(params[:id])
+    return redirect_to game_path(id: game.id) unless game.victory?
+    @message = Description.find(game.victory_description_id).text
+    destroy_previous_game
+  end
 
   private
 

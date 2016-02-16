@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215025735) do
+ActiveRecord::Schema.define(version: 20160216002824) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
@@ -56,9 +56,10 @@ ActiveRecord::Schema.define(version: 20160215025735) do
   create_table "grids", force: :cascade do |t|
     t.integer  "length"
     t.integer  "width"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "game_id"
+    t.integer  "victory_box_id"
   end
 
   add_index "grids", ["game_id"], name: "index_grids_on_game_id"

@@ -6,6 +6,12 @@ class Game < ActiveRecord::Base
 
   after_create :default_endings
 
+  def victory?
+    box_id = grid.victory_box_id
+    box = Box.find(box_id)
+    box.npc.stat.dead?
+  end
+
   def default_endings
     v = Description.create(Description.pick_from_json('victory')).id
     d = Description.create(Description.pick_from_json('defeat')).id

@@ -1,0 +1,27 @@
+.row
+  :ruby
+    npcs = Npc.where(grid: @game.grid)
+    d = 0
+    npcs.each do |npc|
+      if (npc.stat.dead?)
+        d += 1
+      end
+    end
+    ending_box = Box.find_by(grid: @game.grid, locked: true)
+    if !Item.find_by(opens_box_id: ending_box.id).current_box_id.nil?
+      key_id = Item.find_by(opens_box_id: ending_box.id).current_box_id
+      key = Box.find(key_id)
+    else
+      key = false
+    end
+
+
+  %strong
+    Admin Only:
+  %br
+  = "NPCs: #{npcs.count - d}/#{npcs.count}"
+  %br
+  = "Ending Location: (#{ending_box.x}, #{ending_box.y})"
+  %br
+  - if key
+    = "Key Location: (#{key.x}, #{key.y})"

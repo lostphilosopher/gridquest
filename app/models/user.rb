@@ -5,4 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :game
+
+  def admin?
+    (email && (email == 'wandersen02@gmail.com'))
+  end
 end
