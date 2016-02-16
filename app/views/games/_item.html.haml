@@ -4,10 +4,9 @@
 - if @box.npc && !@box.npc.stat.dead?
   = "Defeat the #{@box.npc.description.name} to see what's in this room!"
 - else
-  - if !@box.items.empty?
-    - @box.items.each do |item|
-      = "#{item.description.name}: #{item.description.text}"
-      %br
-      = link_to "Take: #{item.description.name}", edit_game_path(id: @game.id, game_action: 't')
+  - if @box.item
+    = "#{@box.item.description.name}: #{@box.item.description.text}"
+    %br
+    = link_to "Take: #{@box.item.description.name}", edit_game_path(id: @game.id, game_action: 't')
   - else
     There's nothing useful here...

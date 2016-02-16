@@ -29,8 +29,8 @@ class Box < ActiveRecord::Base
     Npc.find_by(current_box_id: self.id)
   end
 
-  def items
-    Item.where(current_box_id: self.id)
+  def item
+    Item.find_by(current_box_id: self.id)
   end
 
   def display_character
@@ -42,7 +42,7 @@ class Box < ActiveRecord::Base
       '?'
     elsif self.npc && !self.npc.stat.dead?
       'E'
-    elsif !self.items.empty?
+    elsif !self.item.nil?
       'I'
     else
       'X'

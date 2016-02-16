@@ -33,10 +33,8 @@ class Player < ActiveRecord::Base
     Box.find(current_box_id)
   end
 
-  def take_items(items)
-    items.each do |item|
-      item.update(player: self, current_box_id: nil, equipped: true)
-    end
+  def take_item(item)
+    item.update(player: self, current_box_id: nil, equipped: false)
   end
 
   def equipped_items

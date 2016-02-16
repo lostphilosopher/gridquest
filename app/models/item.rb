@@ -8,6 +8,10 @@ class Item < ActiveRecord::Base
   after_create :populate_default_descriptions
   after_create :place_on_grid
 
+  def key?
+    !opens_box_id.nil?
+  end
+
   def equipped?
     self.equipped
   end
@@ -26,6 +30,6 @@ class Item < ActiveRecord::Base
     return if (self.player || self.npc || equipped?)
     grid = self.grid
     current_box_id = grid.find_by_coordinates(rand(1..grid.width), rand(1..grid.length)).id
-    update(current_box_id: current_box_id) if Box.find(current_box_id).items.empty?
+    update(current_box_id: current_box_id) if Box.find(current_box_id).item.nil?
   end
 end

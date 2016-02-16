@@ -82,7 +82,7 @@ class GamesController < ApplicationController
     @engine.battle(action, player, player.box.npc) if ((SimpleEngine::COMBAT_ACTIONS.include? action) && npc)
 
     # Take item
-    player.take_items(player.box.items) if (!player.box.items.empty? && 't' == action)
+    player.take_item(player.box.item) if (player.box.item && 't' == action)
 
     # Equip / Unequip item
     if params[:item_id] && action == 'i'

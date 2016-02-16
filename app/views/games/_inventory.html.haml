@@ -4,9 +4,14 @@
 - if !@game.player.items.empty?
   - @game.player.items.each do |item|
     = "#{item.description.name}"
-    %br
-    = "[A: #{item.stat.base_attack} | D: #{item.stat.base_defense}]"
-    %br
-    = link_to(item.equipped? ? 'Unequip' : 'Equip', edit_game_path(id: @game.id, game_action: 'i', item_id: item.id))
+    - if item.key?
+      - box = Box.find(item.opens_box_id)
+      %br
+      = "Opens (#{box.x}, #{box.y})"
+    - else
+      %br
+      = "[A: #{item.stat.base_attack} | D: #{item.stat.base_defense}]"
+      %br
+      = link_to(item.equipped? ? 'Unequip' : 'Equip', edit_game_path(id: @game.id, game_action: 'i', item_id: item.id))
 - else
   None...
