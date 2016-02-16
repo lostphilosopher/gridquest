@@ -7,6 +7,8 @@ class Player < ActiveRecord::Base
 
   after_save :mark_current_box_explored
 
+  MAX_ITEMS = 2
+
   def run
     move(random_path)
   end
@@ -39,6 +41,10 @@ class Player < ActiveRecord::Base
 
   def equipped_items
     Item.where(player: self, equipped: true)
+  end
+
+  def inventory_full?
+    equipped_items.count >= MAX_ITEMS
   end
 
   private
