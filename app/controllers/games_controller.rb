@@ -41,12 +41,14 @@ class GamesController < ApplicationController
     d = Description.create(name: 'Skeleton Key', text: 'This key will open the door to your nightmares.')
     item = Item.create(grid: grid)
     item.update(description: d)
+    item.update(opens_box_id: box.id)
     d = Description.create(name: 'Famine', text: 'A horseman of the Apocolypse.', url: 'https://static.pexels.com/photos/1555/black-and-white-flight-man-person-large.jpg')
     npc = Npc.create(grid: grid)
     npc.update(current_box_id: box.id, description: d)
     h = rand(10..20)
     npc.stat.update(base_health: h, base_attack: rand(10..20), base_defense: rand(10..20), current_health: h)
-    item.update(opens_box_id: box.id)
+    # @todo Not this
+    redirect_to new_game_path unless (box.locked? && box.npc && item.opens_box_id && item.current_box_id)
 
     # Create game with grid and player
     game = Game.create(grid: grid, player: player, user: current_user)

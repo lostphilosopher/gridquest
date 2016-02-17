@@ -32,8 +32,6 @@ class Player < ActiveRecord::Base
       return
     elsif new_box.locked?
       game.write_note("(#{new_box.x},#{new_box.y}) unlocked.")
-      new_box.update(explored: true)
-      return
     end
     game.write_note("Moved #{direction_to_s(direction)}.")
     update(current_box_id: new_box.id)
@@ -44,7 +42,7 @@ class Player < ActiveRecord::Base
   end
 
   def take_item(item)
-    return if items_in_inventory >= MAX_ITEMS
+    return if inventory_full?
     item.update(player: self, current_box_id: nil, equipped: false)
     game.write_note("Took #{item.description.name}.")
   end

@@ -8,19 +8,17 @@
       - box = Box.find(item.opens_box_id)
       %br
       = "Opens (#{box.x}, #{box.y})"
-      %br
     - else
       %br
       = "[A: #{item.stat.base_attack} | D: #{item.stat.base_defense}]"
     %br
     - if item.equipped?
-      = link_to('Unequip', edit_game_path(id: @game.id, game_action: 'i', item_id: item.id))
+      = link_to('Unequip', edit_game_path(id: @game.id, game_action: 'i', item_id: item.id)) unless item.key?
     - else
-      = link_to('Equip', edit_game_path(id: @game.id, game_action: 'i', item_id: item.id)) unless @game.player.fully_equipped?
-      = raw("<em>Limit reached (#{Player::MAX_EQUIPPED})</em>") if @game.player.fully_equipped?
-    = ' | '
-    - #@todo No key dropping
-    = link_to 'Drop', edit_game_path(id: @game.id, game_action: 'd', item_id: item.id)
+      = link_to('Equip', edit_game_path(id: @game.id, game_action: 'i', item_id: item.id)) unless @game.player.fully_equipped? || item.key?
+      = raw("<em>Limit reached (#{Player::MAX_EQUIPPED})</em>") if @game.player.fully_equipped? && !item.key?
+    = ' | ' unless item.key?
+    = link_to 'Drop', edit_game_path(id: @game.id, game_action: 'd', item_id: item.id) unless item.key?
     %br
 - else
   None...
