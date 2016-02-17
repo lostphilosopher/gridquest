@@ -10,8 +10,8 @@
       = render 'item'
 
   %hr
-  .hidden-xs.visible-sm-block.hidden-md.hidden-lg
-    = render 'actions'
+  .visible-xs-block.visible-sm-block.hidden-md.hidden-lg
+    = render 'feed'
     %hr
 
   .row
@@ -21,7 +21,7 @@
       .visible-xs-block.visible-sm-block.hidden-md.hidden-lg
         = render 'grid'
       .hidden-xs.hidden-sm.visible-md-block.visible-lg-block
-        = render 'actions'
+        = render 'feed'
     .col-sm-3
       = render 'inventory'
 
@@ -29,5 +29,5 @@
 
 - if @box
   #spacer
-  #footer.hidden-lg.hidden-md.hidden-sm
-    = render 'actions'
+  #footer
+    = render 'console'

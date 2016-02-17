@@ -7,6 +7,10 @@
   - if @box.item
     = "#{@box.item.description.name}: #{@box.item.description.text}"
     %br
-    = link_to "Take: #{@box.item.description.name}", edit_game_path(id: @game.id, game_action: 't')
+    - if @game.player.inventory_full?
+      %em 
+        = "Inventory full..."
+    - else
+      = link_to "Take: #{@box.item.description.name}", edit_game_path(id: @game.id, game_action: 't')
   - else
     There's nothing useful here...

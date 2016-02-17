@@ -1,0 +1,4 @@
+- @game.notes.sort_by(&:created_at).last(10).reverse.each do |note|
+  %em
+    = note.text
+    %br

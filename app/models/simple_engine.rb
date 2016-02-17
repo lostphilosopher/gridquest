@@ -8,19 +8,34 @@ class SimpleEngine < Engine
 
   # :nocov:
   def battle(action, player, npc)
+    player.game.write_note("Entering combat with #{npc.description.name}.")
+
     # Determine order of combat
     combatant_1 = first_striker(action, player, npc)
     combatant_2 = (player.id == combatant_1.id) ? npc : player
 
+    if combatant_1 == player
+      player.game.write_note("You strike first.")
+    else
+      player.game.write_note("#{npc.description.name} strikes first.")
+    end
+
     # Fight!
-    round(combatant_1, combatant_2)
+    round(combatant_1, combatant_2, player)
     # Award XP
     award_xp(player, npc)
 
     return if combatant_2.stat.current_health == 0
 
+    if combatant_1 == player
+      player.game.write_note("#{npc.description.name} strikes back.")
+    else
+      player.game.write_note("You strike back.")
+    end
+
+
     # If the second to strike is stil around, give them the opportunity
-    round(combatant_2, combatant_1)
+    round(combatant_2, combatant_1, player)
     # Award XP
     award_xp(player, npc)
   end
@@ -28,13 +43,30 @@ class SimpleEngine < Engine
 
   def award_xp(player, npc)
     return unless npc.stat.dead?
-    player.stat.update(xp: (npc.stat.level.to_i + player.stat.xp.to_i))
+    xp_gained = npc.stat.level.to_i
+    total = (xp_gained + player.stat.xp.to_i)
+    player.stat.update(xp: total)
+
+    player.game.write_note("#{xp_gained} XP gained.")
   end
 
-  def round(combatant_1, combatant_2)
+  # @todo Refactor using @vars
+  def round(combatant_1, combatant_2, player)
     # combatant_1 always strikes first
-    damage = SimpleEngine.attack(combatant_1) - SimpleEngine.defense(combatant_2)
+    damage = [0, (SimpleEngine.attack(combatant_1) - SimpleEngine.defense(combatant_2))].max
+
+    if combatant_2 == player
+      player.game.write_note("#{damage} damage done to you.")
+    else
+      player.game.write_note("#{damage} damage done to #{combatant_2.description.name}.")
+    end
+
     resulting_health = [0, combatant_2.stat.current_health - damage].max
+
+    if resulting_health == 0
+      player.game.write_note("#{combatant_2.description.name} is killed.") if combatant_2 != player
+    end
+
     combatant_2.stat.update(current_health: resulting_health) if damage > 0
   end
 
@@ -57,7 +89,7 @@ class SimpleEngine < Engine
 
   def run(player, npc)
     npc_action = pick_npc_action
-    round(npc, player) if 'quick_attack'
+    round(npc, player, player) if 'quick_attack'
     player.run
   end
 

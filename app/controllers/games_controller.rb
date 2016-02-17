@@ -64,6 +64,7 @@ class GamesController < ApplicationController
   def edit
     game = Game.find(params[:id])
     action = params[:game_action]
+    item_id = params[:item_id]
     player = game.player
     # @todo: Consider "GuaranteedAnimal"
     if player.box.npc && !player.box.npc.stat.dead?
@@ -81,10 +82,12 @@ class GamesController < ApplicationController
     # Combat
     @engine.battle(action, player, player.box.npc) if ((SimpleEngine::COMBAT_ACTIONS.include? action) && npc)
 
-    # Take item
-    player.take_item(player.box.item) if (player.box.item && 't' == action)
+    # Take/Drop item
+    player.take_item(player.box.item) if (player.box.item && 't' == action && !player.inventory_full?)
+    player.drop_item(Item.find(item_id)) if (!player.items.empty? && 'd' == action)
 
     # Equip / Unequip item
+    # @todo method
     if params[:item_id] && action == 'i'
       item = Item.find(params[:item_id])
       item.update(equipped: !item.equipped?)
