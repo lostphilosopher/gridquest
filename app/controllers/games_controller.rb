@@ -52,6 +52,7 @@ class GamesController < ApplicationController
 
     # Create game with grid and player
     game = Game.create(grid: grid, player: player, user: current_user)
+    game.write_note('Your journey begins.')
 
     # Begin game
     return redirect_to game_path(id: game.id)
@@ -60,6 +61,9 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @box = Box.find(@game.player.current_box_id)
+
+    return redirect_to victory_game_path(id: @game.id) if @game.victory?
+    return redirect_to defeat_game_path(id: @game.id) if @game.defeat?
   end
 
   # @todo REFACTOR!!!
@@ -104,17 +108,17 @@ class GamesController < ApplicationController
   end
 
   def defeat
-    game = Game.find(params[:id])
-    return redirect_to game_path(id: game.id) unless game.player.stat.dead?
+    return redirect_to games_path unless game = Game.find_by(id: params[:id])
+    return redirect_to game_path(id: game.id) unless game.defeat?
     @message = Description.find(game.defeat_description_id).text
-    destroy_previous_game
+    @notes = game.recent_notes
   end
 
   def victory
-    game = Game.find(params[:id])
+    return redirect_to games_path unless game = Game.find_by(id: params[:id])
     return redirect_to game_path(id: game.id) unless game.victory?
     @message = Description.find(game.victory_description_id).text
-    destroy_previous_game
+    @notes = game.recent_notes
   end
 
   private

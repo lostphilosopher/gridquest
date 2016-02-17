@@ -65,6 +65,7 @@ class SimpleEngine < Engine
 
     if resulting_health == 0
       player.game.write_note("#{combatant_2.description.name} is killed.") if combatant_2 != player
+      player.game.write_note("You are killed.") if combatant_2 == player
     end
 
     combatant_2.stat.update(current_health: resulting_health) if damage > 0
@@ -89,7 +90,7 @@ class SimpleEngine < Engine
 
   def run(player, npc)
     npc_action = pick_npc_action
-    round(npc, player, player) if 'quick_attack'
+    round(npc, player, player) if 'quick_attack' == COMBAT_ACTIONS[npc_action]
     player.run
   end
 
@@ -100,10 +101,20 @@ class SimpleEngine < Engine
   end
 
   def self.attack(character)
+    max_attack = self.max_attack(character)
+    rand(character.stat.base_attack..max_attack)
+  end
+
+  def self.max_attack(character)
     [0, character.stat.base_attack + SimpleEngine.items_attack_modifier(character.equipped_items)].max
   end
 
   def self.defense(character)
+    max_defense = self.max_defense(character)
+    rand(character.stat.base_defense..max_defense)
+  end
+
+  def self.max_defense(character)
     [0, character.stat.base_defense + SimpleEngine.items_defense_modifier(character.equipped_items)].max
   end
 

@@ -25,3 +25,7 @@
   %br
   - if key
     = "Key Location: (#{key.x}, #{key.y})"
+    %br
+  - box = Box.find_by(id: @game.player.current_box_id)
+  - if box && box.npc
+    = "A: #{box.npc.stat.base_attack} D: #{box.npc.stat.base_defense} CH: #{box.npc.stat.current_health}"

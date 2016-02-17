@@ -12,10 +12,18 @@ class Game < ActiveRecord::Base
     Note.create(game: self, text: text)
   end
 
+  def recent_notes
+    notes.sort_by(&:created_at).last(10).reverse
+  end
+
   def victory?
     box_id = grid.victory_box_id
     box = Box.find(box_id)
     box.npc.stat.dead?
+  end
+
+  def defeat?
+    player.stat.dead?
   end
 
   def default_endings

@@ -5,12 +5,14 @@
   = "Defeat the #{@box.npc.description.name} to see what's in this room!"
 - else
   - if @box.item
-    = "#{@box.item.description.name}: #{@box.item.description.text}"
-    %br
-    - if @game.player.inventory_full?
-      %em 
-        = "Inventory full..."
-    - else
-      = link_to "Take: #{@box.item.description.name}", edit_game_path(id: @game.id, game_action: 't')
+    - @box.items.each do |item|
+      = "#{@box.item.description.name}: #{@box.item.description.text}"
+      %br
+      - if @game.player.inventory_full?
+        %em
+          = "Inventory full..."
+      - else
+        = link_to "Take: #{@box.item.description.name}", edit_game_path(id: @game.id, game_action: 't')
+      %br
   - else
     There's nothing useful here...

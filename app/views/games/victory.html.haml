@@ -1,4 +1,10 @@
 %h2
- = @message
- %br
- = link_to 'Start New Game', new_game_path
+  = @message
+  %br
+  = link_to 'Start New Game', new_game_path
+  %br
+- @notes.each do |note|
+  %em
+    .text-center
+      = note.text
+      %br
