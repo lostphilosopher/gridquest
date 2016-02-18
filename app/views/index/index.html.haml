@@ -1,8 +1,42 @@
 %h2
-  Lorem ipsum
+  GridQuest
 %p
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ullamcorper cursus congue. Ut lacus elit, consectetur sed porta ut, rutrum a turpis. Phasellus pharetra velit quis feugiat aliquet. Nulla ante arcu, lobortis eget eros nec, dignissim accumsan neque. Nam non est mauris. Fusce tristique tempus nibh, eget bibendum arcu congue id. Ut eget lectus et ex efficitur suscipit. Nulla quis iaculis diam. In nec metus aliquam, tempor magna et, tempus metus. Nullam varius odio vel tortor varius mattis. Nam laoreet vestibulum odio, eget tempor mi lobortis vitae.
+  GridQuest is an ultra-lite 2D top-down RPG. You begin each game as a randomly generated player on randomly generated grid of 100 tiles. Tiles can contain enemies, weapons, keys, and locked doors. Your objective is to explore the grid while seaching for the "Skelton Key" and equipping yourself with better weapons. Once you have the key you must find Famine, a horseman of the apocalypse who is gathering his strength in a locked tile. If you defeat Famine - you win.
 %p
-  Nulla sed pellentesque risus, eget venenatis nisl. In et odio iaculis, rhoncus erat nec, dignissim enim. Etiam fermentum nibh bibendum nisl tincidunt dapibus. Donec rhoncus gravida neque non dapibus. Aliquam tincidunt vehicula tortor et placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit ut ipsum laoreet placerat. Ut at nunc sed diam pharetra pharetra.
-%p
-  Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed mattis commodo massa. Maecenas convallis tellus eu sapien sollicitudin, sit amet mattis purus consequat. Maecenas mattis lacinia lectus, a interdum magna efficitur id. Vestibulum egestas volutpat neque, in malesuada diam vulputate non. Integer in eros nec odio porttitor consectetur. Nunc sit amet ex varius, vestibulum sem nec, cursus ante. Nullam eleifend eros orci, vitae blandit nisl venenatis dapibus. Integer a mi ante. Nam eget aliquet elit. Fusce bibendum dolor nulla, non euismod leo eleifend eu. Sed non nisi quis enim suscipit sollicitudin quis in leo. Quisque eu auctor neque, in venenatis elit. Aenean eleifend bibendum erat, non lacinia arcu rutrum nec. Sed cursus mollis massa, ac facilisis dolor faucibus vestibulum. Nulla nunc nibh, ullamcorper eget turpis at, malesuada accumsan tortor.
+  You can only have one active/in progress game ("current game") at a time, each time you start a new game your old one is wiped out. You can come back to your current game at any point, even after logging out. 
+
+%h3
+  Controls:
+
+%strong
+  Movement:
+%br
+North: Move one space Up on the grid. Ex: (4,2) to (4,3)
+%br
+South: Move one space Down on the grid. Ex: (4,2) to (4,1)
+%br
+East: Move one space Right on the grid. Ex: (4,2) to (5,2)
+%br
+West: Move one space Left on the grid. Ex: (4,2) to (4,1)
+%br
+%br
+
+%strong
+  Items:
+%br
+Take: <Item Name>: Add <item name> to your inventory. You may only carry 5 items at a time.
+%br
+Drop: Remove <Item> from your inventory. It will be placed on the current tile.
+%br
+Equip: Set the item to be in use. It's Attack (A) and Defense (D) scores will be added to your own, inreasing your max damage and defense. You may only have 2 items equipped at a time.
+%br
+Unequip: Stop using the item. It will no longer be counted towards your max attack and defense.
+%br
+%br
+
+%strong
+  Combat:
+%br
+Heavy Attack / Quick Attack / Defend: Attempt a combat action, your enemy will do the same, first strike is awarded via a "rock paper scissors" mechanic (Defense beats Quick Attack, Quick Attack beats Heavy Attack, Heavy Attack beats Defense.) Damage to an enemy is calcuated by rolling a random number between your base attack and your max attack, this is compaired with your enemies base defense. Damage to you is determined by subtracting a random number between your base defense and max defense from your enemies base attack.
+%br
+Run: You have a two in three chance of escaping to a random adjacent tile unscathed, but there is a one in three chance your enemy will catch you with a quick attack granting them automatic first strike. 
