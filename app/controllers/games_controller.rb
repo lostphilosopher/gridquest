@@ -42,7 +42,7 @@ class GamesController < ApplicationController
     item = Item.create(grid: grid)
     item.update(description: d)
     item.update(opens_box_id: box.id)
-    d = Description.create(name: 'Famine', text: 'A horseman of the Apocolypse.', url: 'https://static.pexels.com/photos/1555/black-and-white-flight-man-person-large.jpg')
+    d = Description.create(name: 'Famine', text: 'A horseman of the Apocolypse.', url: 'https://static.pexels.com/photos/1555/black-and-white-flight-man-person-large.jpg', file_path: 'Famine')
     npc = Npc.create(grid: grid)
     npc.update(current_box_id: box.id, description: d)
     h = rand(10..20)

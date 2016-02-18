@@ -37,8 +37,8 @@ class Box < ActiveRecord::Base
     Item.where(current_box_id: self.id)
   end
 
-  def display_character
-    if self.id == self.grid.game.player.current_box_id
+  def display_character(show_player = true)
+    if (self.id == self.grid.game.player.current_box_id) && show_player
       '@'
     elsif explored? && locked?
       'L'

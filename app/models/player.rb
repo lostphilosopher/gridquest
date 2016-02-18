@@ -78,6 +78,10 @@ class Player < ActiveRecord::Base
     map[direction]
   end
 
+  def key?
+    (items_in_inventory.where.not('opens_box_id' => nil).count > 0)
+  end
+
   private
 
   def mark_current_box_explored
