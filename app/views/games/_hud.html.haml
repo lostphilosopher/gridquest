@@ -1,5 +1,5 @@
 - if @box
   .text-right
-    = "H: #{@game.player.stat.current_health}/#{@game.player.stat.base_health} Pos: (#{@box.x}, #{@box.y}) #{@box.display_character(false)} Key: #{@game.player.key? ? 'Yes' : 'No'}"
+    = "H: #{@game.player.stat.current_health}/#{@game.player.stat.base_health} #{@box.display_character(false)}: (#{@box.x},#{@box.y}) Key: #{@game.player.key? ? 'Yes' : 'No'}"
 
 
