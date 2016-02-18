@@ -1,28 +1,14 @@
-== README
+GridQuest
+=========
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Production: http://gridquest.com
 
-Things you may want to cover:
+Grid based game, and game building tool built in Rails.
 
-* Ruby version
+##Development
 
-* System dependencies
+1. git clone https://github.com/lostphilosopher/gridquest.git  
+2. bundle install  
+3. rails s  
+(Runs with SQLite)   
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
