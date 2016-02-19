@@ -48,6 +48,9 @@ class SimpleEngine < Engine
     player.stat.update(xp: total)
 
     player.game.write_note("#{xp_gained} XP gained.")
+
+    # Meta
+    player.game.user.meta.increment_kills
   end
 
   # @todo Refactor using @vars

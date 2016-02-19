@@ -4,3 +4,13 @@
 = link_to 'Start New Game', new_game_path
 = ' | ' if @game
 = link_to 'Continue Game', game_path(id: @game.id) if @game
+
+%h3
+  Stats
+= "Total XP Gained: #{current_user.meta.xp}"
+%br
+= "Total Games Played: #{current_user.meta.games_played}"
+%br
+= "Total Games Won: #{current_user.meta.wins}"
+%br
+= "Total Kills: #{current_user.meta.kills}"

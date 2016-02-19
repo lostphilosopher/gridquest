@@ -1,0 +1,42 @@
+%h2
+  AARRR: Acquisition, Activation, Retention, Revenue, Referral
+
+.row
+  .col-sm-4
+    %h3
+      Acquisition
+    100% Organic
+  .col-sm-4
+    %h3
+      Activation
+    = "Total number of users: #{@users.count}"
+    %br
+    = "Number of users activated this year: #{@users.where('created_at >= ?', 1.year.ago).count}"
+    %br
+    = "Number of users activated this month: #{@users.where('created_at >= ?', 1.month.ago).count}"
+    %br
+    = "Number of users activated this week: #{@users.where('created_at >= ?', 1.week.ago).count}"
+    %br
+    = "Number of users activated today: #{@users.where('created_at >= ?', 1.day.ago).count}"
+  .col-sm-4
+    %h3
+      Retention
+    = "Total number of users: #{@users.count}"
+    %br
+    = "Number of users active this year: #{@users.where('updated_at >= ?', 1.year.ago).count}"
+    %br
+    = "Number of users active this month: #{@users.where('updated_at >= ?', 1.month.ago).count}"
+    %br
+    = "Number of users active this week: #{@users.where('updated_at >= ?', 1.week.ago).count}"
+    %br
+    = "Number of users active today: #{@users.where('updated_at >= ?', 1.day.ago).count}"
+
+  .row
+    .col-sm-4
+      %h3
+        Revenue
+      Steal underpants?
+    .col-sm-4
+      %h3
+        Referral
+      TBD

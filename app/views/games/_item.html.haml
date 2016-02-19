@@ -6,13 +6,13 @@
 - else
   - if @box.item
     - @box.items.each do |item|
-      = "#{@box.item.description.name}: #{@box.item.description.text}"
+      = "#{item.description.name}: #{item.description.text}"
       %br
       - if @game.player.inventory_full?
         %em
           = "Inventory full..."
       - else
-        = link_to "Take: #{@box.item.description.name}", edit_game_path(id: @game.id, game_action: 't')
+        = link_to "Take: #{item.description.name}", edit_game_path(id: @game.id, game_action: 't', item_id: item.id)
       %br
   - else
     There's nothing useful here...

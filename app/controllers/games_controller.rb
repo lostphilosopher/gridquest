@@ -54,6 +54,9 @@ class GamesController < ApplicationController
     game = Game.create(grid: grid, player: player, user: current_user)
     game.write_note('Your journey begins.')
 
+    # Meta
+    current_user.meta.increment_games_played
+
     # Begin game
     return redirect_to game_path(id: game.id)
   end
@@ -89,17 +92,20 @@ class GamesController < ApplicationController
     @engine.battle(action, player, player.box.npc) if ((SimpleEngine::COMBAT_ACTIONS.include? action) && npc)
 
     # Take/Drop item
-    player.take_item(player.box.item) if (player.box.item && 't' == action && !player.inventory_full?)
+    player.take_item(Item.find(item_id)) if (player.box.item && 't' == action && !player.inventory_full?)
     player.drop_item(Item.find(item_id)) if (!player.items.empty? && 'd' == action)
 
     # Equip / Unequip item
     # @todo method
     if params[:item_id] && action == 'i'
-      item = Item.find(params[:item_id])
+      item = Item.find(item_id)
       item.update(equipped: !item.equipped?)
     end
 
     # Has a victory or loss condition been meet?
+    # Meta
+    current_user.meta.increment_games_won if game.victory?
+    current_user.meta.add_to_xp(player.stat.xp.to_i) if (game.victory? || player.stat.dead?)
     return redirect_to defeat_game_path(id: game.id) if player.stat.dead?
     return redirect_to victory_game_path(id: game.id) if game.victory?
 

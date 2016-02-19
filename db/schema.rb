@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217044842) do
+ActiveRecord::Schema.define(version: 20160219044447) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
@@ -78,6 +78,18 @@ ActiveRecord::Schema.define(version: 20160217044842) do
   add_index "items", ["grid_id"], name: "index_items_on_grid_id"
   add_index "items", ["npc_id"], name: "index_items_on_npc_id"
   add_index "items", ["player_id"], name: "index_items_on_player_id"
+
+  create_table "meta", force: :cascade do |t|
+    t.integer  "xp",           default: 0
+    t.integer  "games_played", default: 0
+    t.integer  "wins",         default: 0
+    t.integer  "kills",        default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "user_id"
+  end
+
+  add_index "meta", ["user_id"], name: "index_meta_on_user_id"
 
   create_table "notes", force: :cascade do |t|
     t.string   "text"

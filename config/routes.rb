@@ -8,5 +8,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/admin', to: 'admin#index'
+
   root to: 'index#index'
 end
