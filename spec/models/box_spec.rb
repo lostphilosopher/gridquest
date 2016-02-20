@@ -89,32 +89,48 @@ RSpec.describe Box, type: :model do
     let!(:box) { Box.first }
     let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }
     let!(:game) { FactoryGirl.create(:game, player: player, grid: grid) }
+
+    before do
+      player.update(current_box_id: nil)
+    end
+
     context 'when the player is present' do
+      before do
+        player.update(current_box_id: box.id)
+      end
       it { expect(box.display_character).to eq '@' }
     end
+
+    context 'when the player knows the box is locked' do
+      before do
+        box.update(explored: true, locked: true)
+      end
+      it { expect(box.display_character).to eq 'L' }
+    end
+
     context 'when the player knows an enemy is present' do
       before do
-        player.update(current_box_id: nil)
         FactoryGirl.create(:npc, current_box_id: box.id)
         box.update(explored: true)
       end
       it { expect(box.display_character).to eq 'E' }
     end
+
     context 'when the player knows an item is present' do
       before do
-        player.update(current_box_id: nil)
         FactoryGirl.create(:item, current_box_id: box.id)
         box.update(explored: true)
       end
       it { expect(box.display_character).to eq 'I' }
     end
+
     context 'when the box is explored and empty' do
       before do
-        player.update(current_box_id: nil)
         box.update(explored: true)
       end
       it { expect(box.display_character).to eq 'X' }
     end
+
     context 'when the box is unexplored' do
       before do
         player.update(current_box_id: nil)

@@ -13,7 +13,7 @@ class Item < ActiveRecord::Base
   end
 
   def equipped?
-    self.equipped
+    equipped
   end
 
   private
@@ -26,9 +26,8 @@ class Item < ActiveRecord::Base
   end
 
   def place_on_grid
-    return unless self.grid
-    return if (self.player || self.npc || equipped?)
-    grid = self.grid
+    return unless grid
+    return if (player || npc || equipped?)
     current_box_id = grid.find_by_coordinates(rand(1..grid.width), rand(1..grid.length)).id
     update(current_box_id: current_box_id) if Box.find(current_box_id).item.nil?
   end

@@ -48,6 +48,32 @@ RSpec.describe Player, type: :model do
         expect(player.box.y).to eq 2
       end
     end
+
+    context 'moving west, but box is locked player does not have key' do
+      let(:before_box_id) { player.current_box_id }
+      before do
+        box = grid.find_by_coordinates(1, 2)
+        box.update(locked: true)
+      end
+      it 'returns the player to their prior box' do
+        player.update_position_by_direction('w')
+        expect(player.box.id).to eq before_box_id
+      end
+    end
+
+    context 'moving west, box is locked, but player does have key' do
+      before do
+        box = grid.find_by_coordinates(1, 2)
+        box.update(locked: true)
+        item = FactoryGirl.create(:item, opens_box_id: box.id)
+        player.update(items: [item])
+      end
+      it 'moves the player into the locked box' do
+        player.update_position_by_direction('w')
+        expect(player.box.x).to eq 1
+        expect(player.box.y).to eq 2
+      end
+    end
   end
 
   describe '.move' do
@@ -63,19 +89,20 @@ RSpec.describe Player, type: :model do
     end
   end
 
-  describe '.take_items' do
+  describe '.take_item' do
     let!(:player) { FactoryGirl.create(:player) }
+    let!(:game) { FactoryGirl.create(:game, player: player) }
     let!(:item) { FactoryGirl.create(:item) }
-    it "equips the item in the player's inventory" do
-      player.take_items([item])
-      expect(player.equipped_items).to include item
+    it "adds the item to the player's inventory" do
+      player.take_item(item)
+      expect(player.items).to include item
     end
   end
 
   describe '.run' do
-    let!(:grid) { FactoryGirl.create(:grid) }
     let(:box) { Box.first }
     let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }
+    let!(:game) { FactoryGirl.create(:game, player: player) }
     it 'moves the player anywhere other than where they are' do
       old_position = player.current_box_id
       player.run
@@ -83,10 +110,117 @@ RSpec.describe Player, type: :model do
     end
   end
 
+  describe '.drop_item' do
+    let(:box) { Box.first }
+    let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }
+    let!(:game) { FactoryGirl.create(:game, player: player) }
+    let!(:item) { FactoryGirl.create(:item, grid: grid) }
+
+    before do
+      player.update(items: [item])
+      player.drop_item(player.items.first)
+    end
+
+    it 'removes the item from the player\'s inventory' do
+      expect(player.items.count).to eq 0
+    end
+
+    it 'places the item in the current box' do
+      expect(item.current_box_id).to eq player.current_box_id
+    end
+  end
+
+  describe '.equipped_items' do
+    let!(:player) { FactoryGirl.create(:player) }
+    let!(:item) { FactoryGirl.create(:item, grid: grid, equipped: true) }
+    before do
+      player.update(items: [item])
+    end
+    it { expect(player.equipped_items).to include item }
+  end
+
+  describe '.fully_equipped?' do
+    let!(:player) { FactoryGirl.create(:player) }
+    let!(:item_1) { FactoryGirl.create(:item, grid: grid, equipped: true) }
+    let!(:item_2) { FactoryGirl.create(:item, grid: grid, equipped: true) }
+    context 'not fully equipped' do
+      before { player.update(items: [item_1]) }
+      it { expect(player.fully_equipped?).to eq false }
+    end
+    context 'fully equipped' do
+      before { player.update(items: [item_1, item_2]) }
+      it { expect(player.fully_equipped?).to eq true }
+    end
+  end
+
+  describe '.items_in_inventory' do
+    let!(:player) { FactoryGirl.create(:player) }
+    let!(:item_1) { FactoryGirl.create(:item, grid: grid, equipped: true) }
+    let!(:item_2) { FactoryGirl.create(:item, grid: grid, equipped: true) }
+    context 'with items' do
+      before { player.update(items: [item_1, item_2]) }
+      it { expect(player.items_in_inventory.count).to eq 2 }
+      it { expect(player.items_in_inventory.first).to be_instance_of Item }
+    end
+    context 'without items' do
+      before { player.update(items: []) }
+      it { expect(player.items_in_inventory.count).to eq 0 }
+    end
+  end
+
+  describe '.inventory_full?' do
+    let!(:player) { FactoryGirl.create(:player) }
+
+    before do
+      4.times do
+        FactoryGirl.create(:item, grid: grid, player: player)
+      end
+    end
+
+    context 'full inventory' do
+      before { FactoryGirl.create(:item, grid: grid, player: player) }
+      it { expect(player.inventory_full?).to eq true }
+    end
+    context 'not full inventory' do
+      it { expect(player.inventory_full?).to eq false }
+    end
+  end
+
+  describe '.direction_to_s' do
+    let!(:player) { FactoryGirl.create(:player) }
+
+    it { expect(player.direction_to_s('n')).to eq 'North' }
+    it { expect(player.direction_to_s('s')).to eq 'South' }
+    it { expect(player.direction_to_s('e')).to eq 'East' }
+    it { expect(player.direction_to_s('w')).to eq 'West' }
+  end
+
+  describe '.key?' do
+    let!(:box) { Box.first }
+    let!(:player) { FactoryGirl.create(:player) }
+    let!(:item) { FactoryGirl.create(:item, opens_box_id: box.id) }
+
+    context 'when the player has a key' do
+      before { player.update(items: [item]) }
+      it { expect(player.key?).to eq true }
+    end
+    context 'when the player does not have a key' do
+      before { player.update(items: []) }
+      it { expect(player.key?).to eq false }
+    end
+  end
+
   describe '.random_path' do
-    let!(:grid) { FactoryGirl.create(:grid) }
     let(:box) { Box.first }
     let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }
     it { expect('nsew').to include player.random_path }
+  end
+
+  describe '.mark_current_box_explored' do
+    let!(:player) { FactoryGirl.create(:player) }
+
+    before { player.update(current_box_id: Box.first.id) }
+
+    it { expect(Box.find(player.current_box_id).explored?).to eq true }
   end
 end

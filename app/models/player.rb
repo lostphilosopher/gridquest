@@ -53,7 +53,7 @@ class Player < ActiveRecord::Base
   end
 
   def equipped_items
-    Item.where(player: self, equipped: true)
+    items_in_inventory.where(player: self, equipped: true)
   end
 
   def fully_equipped?
