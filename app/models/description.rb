@@ -14,6 +14,8 @@ class Description < ActiveRecord::Base
     data_hash.to_a.sample.to_h
   end
 
+  private
+
   def self.read_from_json(type)
     file = File.read(Rails.root.join("app/assets/json/#{type}_descriptions.json"))
     JSON.parse(file)

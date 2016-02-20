@@ -33,6 +33,16 @@ RSpec.describe Box, type: :model do
     end
   end
 
+  describe '.locked?' do
+    let!(:grid) { FactoryGirl.create(:grid) }
+    let!(:locked_box) { FactoryGirl.create(:box, locked: true, grid: grid) }
+    let!(:unlocked_box) { FactoryGirl.create(:box, locked: false, grid: grid) }
+    it 'wraps and returns the boolean of locked' do
+      expect(locked_box.locked?).to eq true
+      expect(unlocked_box.locked?).to eq false
+    end
+  end
+
   describe '.npc' do
     let!(:grid) { FactoryGirl.create(:grid) }
     let(:box) { Box.first }
@@ -50,9 +60,26 @@ RSpec.describe Box, type: :model do
     let(:box) { Box.first }
     context 'with an item present' do
       before { FactoryGirl.create(:item, current_box_id: box.id) }
-      it { expect(box.items.first).to be_instance_of Item }
+      it { expect(box.item).to be_instance_of Item }
     end
     context 'without an item present' do
+      it { expect(box.item).to eq nil }
+    end
+  end
+
+  describe '.items' do
+    let!(:grid) { FactoryGirl.create(:grid) }
+    let(:box) { Box.first }
+    context 'with items present' do
+      before do
+        FactoryGirl.create(:item, current_box_id: box.id)
+        FactoryGirl.create(:item, current_box_id: box.id)
+        FactoryGirl.create(:item, current_box_id: box.id)
+      end
+      it { expect(box.items.count).to eq 3 }
+      it { expect(box.items.first).to be_instance_of Item }
+    end
+    context 'without any items present' do
       it { expect(box.items).to be_empty }
     end
   end

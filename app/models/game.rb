@@ -9,6 +9,7 @@ class Game < ActiveRecord::Base
   after_create :default_endings
 
   def write_note(text)
+    return if text.empty?
     Note.create(game: self, text: text)
   end
 
@@ -19,6 +20,7 @@ class Game < ActiveRecord::Base
   def victory?
     box_id = grid.victory_box_id
     box = Box.find(box_id)
+    raise "No enemy on victory_box_id #{box_id} for game #{id}" unless box.npc
     box.npc.stat.dead?
   end
 

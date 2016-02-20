@@ -14,15 +14,11 @@ class Grid < ActiveRecord::Base
     )
   end
 
-  def box_exists?(x_cord, y_cord)
-    find_by_coordinates(x_cord, y_cord).present?
-  end
-
   private
 
   def populate_grid
-    (1..self.length).to_a.each do |l|
-      (1..self.width).to_a.each do |w|
+    (1..self.length).each do |l|
+      (1..self.width).each do |w|
         Box.create(x: w, y: l, grid: self)
       end
     end
