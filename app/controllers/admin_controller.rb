@@ -9,6 +9,6 @@ class AdminController < ApplicationController
   private
 
   def authenticate_admin
-    return root_path unless current_user && current_user.admin?
+    return redirect_to root_path unless current_user && current_user.admin?
   end
 end

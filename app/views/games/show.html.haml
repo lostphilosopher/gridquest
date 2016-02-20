@@ -27,7 +27,8 @@
     .col-sm-3
       = render 'inventory'
 
-  = render 'admin'
+  - if current_user.admin?
+    = render 'admin'
 
 - if @box
   #spacer
