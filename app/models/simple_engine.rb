@@ -58,6 +58,11 @@ class SimpleEngine < Engine
     # combatant_1 always strikes first
     damage = [0, (SimpleEngine.attack(combatant_1) - SimpleEngine.defense(combatant_2))].max
 
+    if critical?
+      damage = damage * 2
+      player.game.write_note('Critical hit.')
+    end
+
     if combatant_2 == player
       player.game.write_note("#{damage} damage done to you.")
     else

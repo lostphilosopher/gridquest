@@ -1,5 +1,5 @@
 class Engine
-  BASE_NUMBER = 100
+  BASE_NUMBER = 20
 
   def critical?
     r = rand(1..BASE_NUMBER)
