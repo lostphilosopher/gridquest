@@ -104,7 +104,7 @@ class GamesController < ApplicationController
 
     # Has a victory or loss condition been meet?
     # Meta
-    current_user.meta.increment_games_won if game.victory?
+    current_user.meta.increment_wins if game.victory?
     current_user.meta.add_to_xp(player.stat.xp.to_i) if (game.victory? || player.stat.dead?)
     return redirect_to defeat_game_path(id: game.id) if player.stat.dead?
     return redirect_to victory_game_path(id: game.id) if game.victory?
