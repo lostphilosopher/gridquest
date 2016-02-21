@@ -5,13 +5,19 @@ RSpec.describe SimpleEngine, type: :model do
   let!(:stat_2) { FactoryGirl.create(:stat, base_attack: 10, base_defense: 0, current_health: 1) }
   let!(:player) { FactoryGirl.create(:player, stat: stat_1) }
   let!(:npc) { FactoryGirl.create(:npc, stat: stat_2) }
+  let!(:user) { FactoryGirl.create(:user) }
+  let!(:game) { FactoryGirl.create(:game, player: player, user: user) }
 
   before do
     @foo = SimpleEngine.new
   end
 
   describe '#BASE_NUMBER' do
-    it { expect(SimpleEngine::BASE_NUMBER).to eq 20 }
+    it { expect(SimpleEngine::BASE_NUMBER).to be_instance_of Fixnum }
+  end
+
+  describe '#COMBAT_ACTIONS' do
+    it { expect(SimpleEngine::COMBAT_ACTIONS).to be_instance_of Array }
   end
 
   # describe '.battle' do
@@ -51,12 +57,12 @@ RSpec.describe SimpleEngine, type: :model do
   describe '.round' do
     it 'if the player strikes first they win' do
       player.stat.update(base_attack: 10000)
-      @foo.round(player, npc)
+      @foo.round(player, npc, player)
       expect(npc.stat.current_health).to eq 0
     end
     it 'if the npc strikes first they win' do
       npc.stat.update(base_attack: 10000)
-      @foo.round(npc, player)
+      @foo.round(npc, player, player)
       expect(player.stat.current_health).to eq 0
     end
   end
