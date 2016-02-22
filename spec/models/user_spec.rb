@@ -12,4 +12,10 @@ RSpec.describe User, type: :model do
   describe '.add_meta_to_user' do
     it { expect(user.meta).to be_instance_of Meta }
   end
+
+  describe '.build_a_player_for_game' do
+    let!(:game) { FactoryGirl.create(:game) }
+    let!(:grid) { FactoryGirl.create(:grid, game: game) }
+    it { expect(user.build_a_player_for_game(game)).to be_instance_of Player }
+  end
 end

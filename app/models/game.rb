@@ -20,7 +20,6 @@ class Game < ActiveRecord::Base
   def victory?
     box_id = grid.victory_box_id
     box = Box.find(box_id)
-    raise "No enemy on victory_box_id #{box_id} for game #{id}" unless box.npc
     box.npc.stat.dead?
   end
 
@@ -32,5 +31,30 @@ class Game < ActiveRecord::Base
     v = Description.create(Description.pick_from_json('victory')).id
     d = Description.create(Description.pick_from_json('defeat')).id
     update(victory_description_id: v, defeat_description_id: d)
+  end
+
+  # @todo Add description and class(?)
+  def build_a_player
+    Player.create(
+      name: 'Player 1',
+      current_box_id: grid.random_clear_box.id,
+      stat: Stat.create(
+              base_health: 10,
+              base_attack: rand(1..10),
+              base_defense: rand(1..10),
+              current_health: 10
+            )
+    )
+  end
+
+  def sane?
+    return false unless (grid && grid.victory_box_id)
+    victory_box_id = grid.victory_box_id
+    return false unless Box.find(victory_box_id)
+    victory_box = Box.find(victory_box_id)
+    return false unless (victory_box.npc? && victory_box.locked?)
+    return false unless Item.find_by(opens_box_id: victory_box)
+
+    true
   end
 end

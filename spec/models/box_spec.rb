@@ -138,4 +138,56 @@ RSpec.describe Box, type: :model do
       it { expect(box.display_character).to eq '?' }
     end
   end
+
+  describe '.possible_actions' do
+    let!(:grid) { FactoryGirl.create(:grid, length: 3, width: 3) }
+    let!(:box) { Box.first }
+    let!(:box_2) { Box.second }
+    let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }
+    let!(:game) { FactoryGirl.create(:game, player: player, grid: grid) }
+
+    it { expect(box.possible_actions).to include 'run' }
+
+    context 'when a live npc is present' do
+      let!(:npc) { FactoryGirl.create(:npc, current_box_id: box.id) }
+      before { npc.update(stat: FactoryGirl.create(:stat, current_health: 10)) }
+      it { expect(box.possible_actions).to include SimpleEngine::COMBAT_ACTIONS }
+    end
+    context 'when a dead npc is present' do
+      let!(:npc) { FactoryGirl.create(:npc, current_box_id: box.id) }
+      before { npc.update(stat: FactoryGirl.create(:stat, current_health: 0)) }
+      it { expect(box.possible_actions).not_to include SimpleEngine::COMBAT_ACTIONS }
+    end
+    context 'when there\'s an item to pick up' do
+      let!(:item) { FactoryGirl.create(:item, current_box_id: box.id) }
+      it { expect(box.possible_actions(item.id)).to include 't' }
+    end
+    context 'when there\'s not an item to pick up' do
+      let!(:item) { FactoryGirl.create(:item, current_box_id: box_2) }
+      it { expect(box.possible_actions(item.id)).not_to include 't' }
+    end
+    context 'when there\'s an item to be dropped' do
+      let!(:item) { FactoryGirl.create(:item, player: player) }
+      it { expect(box.possible_actions(item.id)).to include 'd' }
+    end
+    context 'when there isn\'t an item to be dropped' do
+      let!(:item) { FactoryGirl.create(:item, player: nil) }
+      it { expect(box.possible_actions(item.id)).not_to include 'd' }
+    end
+    context 'when there\'s an item to equip' do
+      let!(:item) { FactoryGirl.create(:item, equipped: true, player: player) }
+      it { expect(box.possible_actions(item.id)).to include 'i' }
+    end
+    context 'when there isn\'t an item to equip' do
+      let!(:item) { FactoryGirl.create(:item, equipped: true, player: nil) }
+      it { expect(box.possible_actions(item.id)).not_to include 'i' }
+    end
+    context 'when there\'s no obstacle to movement' do
+      it { expect(box.possible_actions).to include('n', 'e') }
+    end
+    context 'when there\'s an obstacle to movement' do
+      let!(:npc) { FactoryGirl.create(:npc, current_box_id: box.id) }
+      it { expect(box.possible_actions).not_to include('n', 'e') }
+    end
+  end
 end

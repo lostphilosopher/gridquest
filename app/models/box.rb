@@ -17,6 +17,18 @@ class Box < ActiveRecord::Base
     paths
   end
 
+  def player?
+    (self.grid && self.grid.game && self.grid.game.player && (self.grid.game.player.current_box_id = id))
+  end
+
+  def npc?
+    npc ? true : false
+  end
+
+  def item?
+    item ? true : false
+  end
+
   def explored?
     explored
   end
@@ -35,6 +47,10 @@ class Box < ActiveRecord::Base
 
   def items
     Item.where(current_box_id: self.id)
+  end
+
+  def player
+    grid.game.player if grid && grid.game && grid.game.player
   end
 
   def display_character(show_player = true)
@@ -70,6 +86,25 @@ class Box < ActiveRecord::Base
     end
 
     self.grid.find_by_coordinates(x, y)
+  end
+
+  def possible_actions(item_id = nil)
+    actions = []
+    actions << 'run'
+    if player.box.npc && !player.box.npc.stat.dead?
+      actions << SimpleEngine::COMBAT_ACTIONS
+    else
+      actions << 'n' if paths.include? 'n'
+      actions << 's' if paths.include? 's'
+      actions << 'e' if paths.include? 'e'
+      actions << 'w' if paths.include? 'w'
+    end
+    if Item.find_by(id: item_id)
+      actions << 't' if player.box.item && !player.inventory_full?
+      actions << 'd' if !player.items.empty? && !Item.find(item_id).key?
+      actions << 'i' if !player.items.empty?
+    end
+    actions
   end
 
   private

@@ -15,6 +15,7 @@ RSpec.describe GamesController, type: :controller do
 
   describe '#new' do
     let!(:grid) { FactoryGirl.create(:grid) }
+
     context 'with a signed in user' do
       before do
         sign_in user
@@ -26,11 +27,16 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe '#show' do
-    let!(:grid) { FactoryGirl.create(:grid) }
+    let!(:grid) do
+      grid = FactoryGirl.create(:grid)
+      grid.update(victory_box_id: Box.second.id)
+      FactoryGirl.create(:npc, current_box_id: Box.second.id)
+      grid
+    end
     let!(:player) { FactoryGirl.create(:player, current_box_id: Box.first.id) }
     let!(:game) { FactoryGirl.create(:game, grid: grid, player: player) }
 
-    context 'with a signed in user' do
+    context 'with a signed in user and an ongoing game' do
       before do
         sign_in user
         get :show, id: game.id
@@ -39,6 +45,74 @@ RSpec.describe GamesController, type: :controller do
       it { should render_template 'show' }
       it { expect(assigns(:game)).to eq game }
       it { expect(assigns(:box)).to eq player.box }
+    end
+    context 'with a signed in user and a beaten game' do
+      before do
+        player.update(current_box_id: Box.second.id)
+        Box.second.npc.stat.update(current_health: 0)
+        sign_in user
+        get :show, id: game.id
+      end
+      it { should respond_with :redirect }
+      it { should redirect_to victory_game_path }
+      it { expect(assigns(:game)).to eq game }
+    end
+    context 'with a signed in user and a lost game' do
+      before do
+        player.stat.update(current_health: 0)
+        sign_in user
+        get :show, id: game.id
+      end
+      it { should respond_with :redirect }
+      it { should redirect_to defeat_game_path }
+      it { expect(assigns(:game)).to eq game }
+    end
+  end
+
+  describe '#victory' do
+    let!(:grid) do
+      grid = FactoryGirl.create(:grid)
+      grid.update(victory_box_id: Box.second.id)
+      FactoryGirl.create(:npc, current_box_id: Box.second.id)
+      grid
+    end
+    let!(:player) { FactoryGirl.create(:player, current_box_id: Box.first.id) }
+    let!(:game) { FactoryGirl.create(:game, grid: grid, player: player) }
+
+    context 'with a signed in user and a beaten game' do
+      before do
+        player.update(current_box_id: Box.second.id)
+        Box.second.npc.stat.update(current_health: 0)
+        sign_in user
+        get :victory, id: game.id
+      end
+      it { should respond_with :ok }
+      it { should render_template 'victory' }
+      it { expect(assigns(:message)).to eq Description.find(game.victory_description_id).text }
+      it { expect(assigns(:notes)).to eq [] }
+    end
+  end
+
+  describe '#defeat' do
+    let!(:grid) do
+      grid = FactoryGirl.create(:grid)
+      grid.update(victory_box_id: Box.second.id)
+      FactoryGirl.create(:npc, current_box_id: Box.second.id)
+      grid
+    end
+    let!(:player) { FactoryGirl.create(:player, current_box_id: Box.first.id) }
+    let!(:game) { FactoryGirl.create(:game, grid: grid, player: player) }
+
+    context 'with a signed in user and a lost game' do
+      before do
+        player.stat.update(current_health: 0)
+        sign_in user
+        get :defeat, id: game.id
+      end
+      it { should respond_with :ok }
+      it { should render_template 'victory' }
+      it { expect(assigns(:message)).to eq Description.find(game.defeat_description_id).text }
+      it { expect(assigns(:notes)).to eq [] }
     end
   end
 

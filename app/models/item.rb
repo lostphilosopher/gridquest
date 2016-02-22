@@ -16,6 +16,12 @@ class Item < ActiveRecord::Base
     equipped
   end
 
+  def self.create_key(grid, description, opens_box_id)
+    item = self.create(grid: grid)
+    item.update(description: description)
+    item.update(opens_box_id: opens_box_id)
+  end
+
   private
 
   def populate_default_descriptions

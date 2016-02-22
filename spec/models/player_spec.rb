@@ -3,6 +3,14 @@ require 'rails_helper'
 RSpec.describe Player, type: :model do
   let!(:grid) { FactoryGirl.create(:grid) }
 
+  describe '.npc' do
+    let!(:box) { FactoryGirl.create(:box, grid: grid) }
+    let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }
+    let!(:npc) { FactoryGirl.create(:npc, current_box_id: box.id) }
+
+    it { expect(box.npc).to be_instance_of Npc }
+  end
+
   describe '.box' do
     let!(:box) { FactoryGirl.create(:box, grid: grid) }
     let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }

@@ -17,6 +17,18 @@ class Npc < ActiveRecord::Base
     Item.where(npc: self, equipped: true)
   end
 
+  def self.create_boss(grid, description, box_id)
+    npc = create(grid: grid)
+    npc.update(description: description, current_box_id: box_id)
+    health = rand(10..20)
+    npc.stat.update(
+      base_health: health, 
+      base_attack: rand(10..20),
+      base_defense: rand(10..20),
+      current_health: health
+    )
+  end
+
   private
 
   def populate_default_descriptions_and_stats

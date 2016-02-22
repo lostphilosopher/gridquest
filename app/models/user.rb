@@ -9,6 +9,20 @@ class User < ActiveRecord::Base
 
   after_create :add_meta_to_user
 
+  def build_a_player_for_game(game)
+    Player.create(
+      name: email,
+      current_box_id: game.grid.find_by_coordinates(1,1).id,
+      stat:
+        Stat.create(
+            base_health: 10,
+            base_attack: rand(1..10),
+            base_defense: rand(1..10),
+            current_health: 10
+        )
+    )
+  end
+
   def admin?
     (email && (email == 'wandersen02@gmail.com'))
   end

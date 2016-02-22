@@ -8,16 +8,22 @@ RSpec.describe Description, type: :model do
         it { expect(Description.pick_from_json('box')[elem]).to be_instance_of String }
       end
     end
-    context 'box' do
+    context 'npc' do
       ["name", "url", "text", "file_path"].each do |elem|
         it { expect(Description.pick_from_json('npc')).to have_key elem }
-        it { expect(Description.pick_from_json('box')[elem]).to be_instance_of String }
+        it { expect(Description.pick_from_json('npc')[elem]).to be_instance_of String }
       end
     end
     context 'item' do
       ["name", "text"].each do |elem|
         it { expect(Description.pick_from_json('item')).to have_key elem }
-        it { expect(Description.pick_from_json('box')[elem]).to be_instance_of String }
+        it { expect(Description.pick_from_json('item')[elem]).to be_instance_of String }
+      end
+    end
+    context 'key' do
+      ["name", "text"].each do |elem|
+        it { expect(Description.pick_from_json('key')).to have_key elem }
+        it { expect(Description.pick_from_json('key')[elem]).to be_instance_of String }
       end
     end
   end

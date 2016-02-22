@@ -6,7 +6,7 @@ RSpec.describe Engine, type: :model do
   end
 
   describe '#BASE_NUMBER' do
-    it { expect(Engine::BASE_NUMBER).to eq 100 }
+    it { expect(Engine::BASE_NUMBER).to be_instance_of Fixnum }
   end
 
   describe '.critical?' do
