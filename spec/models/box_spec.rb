@@ -151,12 +151,16 @@ RSpec.describe Box, type: :model do
     context 'when a live npc is present' do
       let!(:npc) { FactoryGirl.create(:npc, current_box_id: box.id) }
       before { npc.update(stat: FactoryGirl.create(:stat, current_health: 10)) }
-      it { expect(box.possible_actions).to include SimpleEngine::COMBAT_ACTIONS }
+      SimpleEngine::COMBAT_ACTIONS.each do |action|
+        it { expect(box.possible_actions).to include action }
+      end
     end
     context 'when a dead npc is present' do
       let!(:npc) { FactoryGirl.create(:npc, current_box_id: box.id) }
       before { npc.update(stat: FactoryGirl.create(:stat, current_health: 0)) }
-      it { expect(box.possible_actions).not_to include SimpleEngine::COMBAT_ACTIONS }
+      SimpleEngine::COMBAT_ACTIONS.each do |action|
+        it { expect(box.possible_actions).not_to include action }
+      end
     end
     context 'when there\'s an item to pick up' do
       let!(:item) { FactoryGirl.create(:item, current_box_id: box.id) }

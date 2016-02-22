@@ -73,6 +73,9 @@ class SimpleEngine < Engine
 
     resulting_health = [0, combatant_2.stat.current_health - damage].max
 
+    puts combatant_2.id == player.id ? "=== Player ===" : "=== Npc ==="
+    puts "=== #{resulting_health} ==="
+
     if resulting_health == 0
       player.game.write_note("#{combatant_2.description.name} is killed.") if combatant_2 != player
       player.game.write_note("You are killed.") if combatant_2 == player

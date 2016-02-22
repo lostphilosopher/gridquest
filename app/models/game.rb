@@ -20,6 +20,7 @@ class Game < ActiveRecord::Base
   def victory?
     box_id = grid.victory_box_id
     box = Box.find(box_id)
+    raise "No enemy on victory_box_id #{box_id} for game #{id}" unless box.npc
     box.npc.stat.dead?
   end
 

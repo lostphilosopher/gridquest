@@ -110,17 +110,22 @@ RSpec.describe GamesController, type: :controller do
         get :defeat, id: game.id
       end
       it { should respond_with :ok }
-      it { should render_template 'victory' }
+      it { should render_template 'defeat' }
       it { expect(assigns(:message)).to eq Description.find(game.defeat_description_id).text }
       it { expect(assigns(:notes)).to eq [] }
     end
   end
 
   describe '#edit' do
-    let!(:grid) { FactoryGirl.create(:grid) }
+    let!(:grid) do
+      grid = FactoryGirl.create(:grid)
+      grid.update(victory_box_id: Box.second.id)
+      FactoryGirl.create(:npc, current_box_id: Box.second.id)
+      grid
+    end
     let!(:stat) { FactoryGirl.create(:stat, base_attack: 100000) }
     let!(:player) { FactoryGirl.create(:player, stat: stat, current_box_id: grid.find_by_coordinates(1,1).id) }
-    let!(:game) { FactoryGirl.create(:game, grid: grid, player: player) }
+    let!(:game) { FactoryGirl.create(:game, grid: grid, player: player, user: user) }
     let!(:npc) { FactoryGirl.create(:npc, current_box_id: grid.find_by_coordinates(1,1).id) }
 
     context 'when game_action is a movement action' do
@@ -137,26 +142,42 @@ RSpec.describe GamesController, type: :controller do
       end
     end
     context 'when game_action is an attack action' do
+      let(:current_box_id) { grid.find_by_coordinates(2,2).id }
+      let!(:npc) { FactoryGirl.create(:npc, current_box_id: current_box_id) }
       before do
+        player.update(current_box_id: current_box_id)
+        player.stat.update(current_health: 100000, base_attack: 100000)
         sign_in user
         get :edit, id: game.id, game_action: SimpleEngine::COMBAT_ACTIONS[1]
       end
       it { should respond_with :redirect }
       it { should redirect_to game_path(id: Game.first.id) }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
+      it { expect(npc.stat.dead?).to eq true }
     end
-    context 'when action is an unequip action' do
-      let!(:item) { FactoryGirl.create(:item, equipped: false) }
-      let(:status) { item.equipped? }
+    context 'when action is a take item action' do
+      let!(:item) { FactoryGirl.create(:item) }
       before do
         sign_in user
-        #item.update(player: player, current_box_id: nil, equipped: true)
+        get :edit, id: game.id, game_action: 't', item_id: item.id
+      end
+      it { should respond_with :redirect }
+      it { should redirect_to game_path(id: Game.first.id) }
+      it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
+      it { expect(item.player.id).to eq player.id }
+      it { expect(item.equipped).to eq false }
+    end
+    context 'when action is an unequip action' do
+      let!(:item) { FactoryGirl.create(:item) }
+      before do
+        sign_in user
+        item.update(player: player, current_box_id: nil, equipped: true)
         get :edit, id: game.id, game_action: 'i', item_id: item.id
       end
       it { should respond_with :redirect }
       it { should redirect_to game_path(id: Game.first.id) }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
-      #it { expect(item.equipped?).to eq true }
+      it { expect(item.equipped?).to eq false }
     end
   end
 end

@@ -92,10 +92,10 @@ class GamesController < ApplicationController
     game
   end
 
-  def take_game_action(item_id, action, player)
+  def take_game_action(item_id = nil, action = nil, player = nil)
     if player.box.possible_actions(item_id).include? action
       if action == 'run'
-        @engine.run(player, box.npc)
+        @engine.run(player, player.box.npc)
       elsif 'nsew'.include? action
         player.move(action)
       elsif SimpleEngine::COMBAT_ACTIONS.include? action

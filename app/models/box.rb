@@ -104,7 +104,7 @@ class Box < ActiveRecord::Base
       actions << 'd' if !player.items.empty? && !Item.find(item_id).key?
       actions << 'i' if !player.items.empty?
     end
-    actions
+    actions.flatten
   end
 
   private
