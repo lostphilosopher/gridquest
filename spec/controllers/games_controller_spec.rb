@@ -153,10 +153,10 @@ RSpec.describe GamesController, type: :controller do
       it { should respond_with :redirect }
       it { should redirect_to game_path(id: Game.first.id) }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
-      it { expect(npc.stat.dead?).to eq true }
+      it { expect(player.box.npc.stat.dead?).to eq true }
     end
     context 'when action is a take item action' do
-      let!(:item) { FactoryGirl.create(:item) }
+      let!(:item) { FactoryGirl.create(:item, current_box_id: grid.find_by_coordinates(1,1).id) }
       before do
         sign_in user
         get :edit, id: game.id, game_action: 't', item_id: item.id
@@ -164,20 +164,20 @@ RSpec.describe GamesController, type: :controller do
       it { should respond_with :redirect }
       it { should redirect_to game_path(id: Game.first.id) }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
-      it { expect(item.player.id).to eq player.id }
-      it { expect(item.equipped).to eq false }
+      it { expect(player.items).to include item }
+      it { expect(item.equipped).not_to eq true }
     end
     context 'when action is an unequip action' do
       let!(:item) { FactoryGirl.create(:item) }
       before do
         sign_in user
-        item.update(player: player, current_box_id: nil, equipped: true)
+        item.update(player: player, current_box_id: nil, equipped: false)
         get :edit, id: game.id, game_action: 'i', item_id: item.id
       end
       it { should respond_with :redirect }
       it { should redirect_to game_path(id: Game.first.id) }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
-      it { expect(item.equipped?).to eq false }
+      it { expect(player.equipped_items).to include item }
     end
   end
 end
