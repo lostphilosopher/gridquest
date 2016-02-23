@@ -4,7 +4,7 @@ RSpec.describe Speed, type: :model do
   let!(:player) { FactoryGirl.create(:player, stat: FactoryGirl.create(:stat, base_attack: 10, base_defense: 10)) }
 
   before do
-    @foo = Speed.new()
+    @foo = Speed.new
   end
 
   describe '.run' do
@@ -29,6 +29,6 @@ RSpec.describe Speed, type: :model do
   end
 
   describe '#attack' do
-    it { expect(Speed.defense(player)).to be >= 10 }
+    it { expect(Speed.attack(player)).to be >= 10 }
   end
 end

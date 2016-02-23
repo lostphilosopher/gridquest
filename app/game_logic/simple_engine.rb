@@ -1,4 +1,3 @@
-# Must expose battle
 class SimpleEngine < Engine
   BASE_NUMBER = 20
 
