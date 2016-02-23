@@ -36,7 +36,7 @@ class GamesController < ApplicationController
     return redirect_to victory_game_path(id: game.id) if game.victory?
 
     # Continue Game
-    return redirect_to game_path(id: game.id)
+    return redirect_to game_path(id: game.id, anchor: 'gametop')
   end
 
   def defeat

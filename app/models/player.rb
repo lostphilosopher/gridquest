@@ -11,7 +11,6 @@ class Player < ActiveRecord::Base
   MAX_EQUIPPED = 2
 
   def run
-    game.write_note("Running.")
     move(random_path)
   end
 

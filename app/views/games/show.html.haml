@@ -2,11 +2,11 @@
   .row.fixed-window
     .col-md-3
       .hidden-xs.hidden-sm
-        = render 'grid'
+        = render 'box'
     .col-md-6
-      .hidden-sm.hidden-md.hidden-lg
+      .hidden-md.hidden-lg
         = render 'hud'
-      = render 'box'
+      = render 'grid'
     .col-md-3
       = render 'npc'
       = render 'item'
@@ -21,7 +21,7 @@
       = render 'status'
     .col-sm-6
       .visible-xs-block.visible-sm-block.hidden-md.hidden-lg
-        = render 'grid'
+        = render 'box'
       .hidden-xs.hidden-sm.visible-md-block.visible-lg-block
         = render 'feed'
     .col-sm-3

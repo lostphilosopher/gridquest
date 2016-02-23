@@ -135,7 +135,7 @@ RSpec.describe GamesController, type: :controller do
         get :edit, id: game.id, game_action: 'n'
       end
       it { should respond_with :redirect }
-      it { should redirect_to game_path(id: Game.first.id) }
+      it { should redirect_to game_path(id: Game.first.id, anchor: 'gametop') }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
       it 'changes the player\'s current location to be y + 1' do
         expect(Player.first.box.y).to eq 2
@@ -151,7 +151,7 @@ RSpec.describe GamesController, type: :controller do
         get :edit, id: game.id, game_action: SimpleEngine::COMBAT_ACTIONS[1]
       end
       it { should respond_with :redirect }
-      it { should redirect_to game_path(id: Game.first.id) }
+      it { should redirect_to game_path(id: Game.first.id, anchor: 'gametop') }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
       it { expect(player.box.npc.stat.dead?).to eq true }
     end
@@ -162,7 +162,7 @@ RSpec.describe GamesController, type: :controller do
         get :edit, id: game.id, game_action: 't', item_id: item.id
       end
       it { should respond_with :redirect }
-      it { should redirect_to game_path(id: Game.first.id) }
+      it { should redirect_to game_path(id: Game.first.id, anchor: 'gametop') }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
       it { expect(player.items).to include item }
       it { expect(item.equipped).not_to eq true }
@@ -175,7 +175,7 @@ RSpec.describe GamesController, type: :controller do
         get :edit, id: game.id, game_action: 'i', item_id: item.id
       end
       it { should respond_with :redirect }
-      it { should redirect_to game_path(id: Game.first.id) }
+      it { should redirect_to game_path(id: Game.first.id, anchor: 'gametop') }
       it { expect(assigns(:engine)).to be_instance_of SimpleEngine }
       it { expect(player.equipped_items).to include item }
     end

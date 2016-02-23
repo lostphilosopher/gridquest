@@ -99,6 +99,7 @@ class SimpleEngine < Engine
   end
 
   def run(player, npc)
+    player.game.write_note("Running.")
     npc_action = pick_npc_action
     round(npc, player, player) if 'quick_attack' == COMBAT_ACTIONS[npc_action]
     player.run
