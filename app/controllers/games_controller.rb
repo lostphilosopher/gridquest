@@ -13,7 +13,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:id])
+    return redirect_to games_path unless @game = Game.find_by(id: params[:id])
     @box = Box.find(@game.player.current_box_id)
 
     return redirect_to victory_game_path(id: @game.id) if @game.victory?
@@ -22,12 +22,14 @@ class GamesController < ApplicationController
 
   # @todo REFACTOR!!!
   def edit
-    game = Game.find(params[:id])
+    return redirect_to games_path unless @game = Game.find_by(id: params[:id])
     action = params[:game_action]
     item_id = params[:item_id]
     player = game.player
 
     take_game_action(item_id, action, player)
+
+    player.box.effect.fire(player) if (player.box.effect? && !player.box.effect.stat.dead?)
 
     # Has a victory or loss condition been meet? - Handle Meta
     current_user.meta.increment_wins if game.victory?
@@ -78,6 +80,11 @@ class GamesController < ApplicationController
     )
     Npc.create_boss(grid, description, victory_box.id)
 
+    Effect::CLASSES.each do |type|
+      effect = Effect.create(grid: grid, current_box_id: grid.random_clear_box.id)
+      effect.of_type(type)
+    end
+
     game = Game.create(grid: grid, user: current_user)
     player = game.build_a_player
     game.update(player: player)
@@ -124,6 +131,8 @@ class GamesController < ApplicationController
       @engine = SimpleEngine.new
     end
   end
+
+  private
 
   def destroy_previous_game
     Game.where(user: current_user).destroy_all

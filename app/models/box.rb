@@ -18,7 +18,7 @@ class Box < ActiveRecord::Base
   end
 
   def player?
-    (self.grid && self.grid.game && self.grid.game.player && (self.grid.game.player.current_box_id = id))
+    (grid && grid.game && grid.game.player && (grid.game.player.current_box_id == id))
   end
 
   def npc?
@@ -37,16 +37,24 @@ class Box < ActiveRecord::Base
     locked
   end
 
+  def effect?
+    effect
+  end
+
+  def effect
+    Effect.find_by(current_box_id: id)
+  end
+
   def npc
-    Npc.find_by(current_box_id: self.id)
+    Npc.find_by(current_box_id: id)
   end
 
   def item
-    Item.find_by(current_box_id: self.id)
+    Item.find_by(current_box_id: id)
   end
 
   def items
-    Item.where(current_box_id: self.id)
+    Item.where(current_box_id: id)
   end
 
   def player
@@ -54,15 +62,20 @@ class Box < ActiveRecord::Base
   end
 
   def display_character(show_player = true)
-    if (self.id == self.grid.game.player.current_box_id) && show_player
+    if (id == grid.game.player.current_box_id) && show_player
       '@'
     elsif explored? && locked?
       'L'
     elsif !explored?
       '?'
-    elsif self.npc && !self.npc.stat.dead?
+    elsif effect? && !effect.stat.dead?
+      return '+' if effect.type?('heal')
+      return '-' if effect.type?('hurt')
+      return '%' if effect.type?('teleport')
+      return 'X'
+    elsif npc && !npc.stat.dead?
       'E'
-    elsif !self.item.nil?
+    elsif !item.nil?
       'I'
     else
       'X'

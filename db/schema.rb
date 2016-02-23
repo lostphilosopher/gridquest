@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223023053) do
+ActiveRecord::Schema.define(version: 20160223033241) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
@@ -37,11 +37,22 @@ ActiveRecord::Schema.define(version: 20160223023053) do
     t.integer  "npc_id"
     t.integer  "item_id"
     t.string   "file_path"
+    t.integer  "effect_id"
   end
 
   add_index "descriptions", ["box_id"], name: "index_descriptions_on_box_id"
+  add_index "descriptions", ["effect_id"], name: "index_descriptions_on_effect_id"
   add_index "descriptions", ["item_id"], name: "index_descriptions_on_item_id"
   add_index "descriptions", ["npc_id"], name: "index_descriptions_on_npc_id"
+
+  create_table "effects", force: :cascade do |t|
+    t.integer  "current_box_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "grid_id"
+  end
+
+  add_index "effects", ["grid_id"], name: "index_effects_on_grid_id"
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at",             null: false
@@ -131,8 +142,10 @@ ActiveRecord::Schema.define(version: 20160223023053) do
     t.integer  "item_id"
     t.integer  "xp",              default: 0
     t.string   "character_class"
+    t.integer  "effect_id"
   end
 
+  add_index "stats", ["effect_id"], name: "index_stats_on_effect_id"
   add_index "stats", ["item_id"], name: "index_stats_on_item_id"
   add_index "stats", ["npc_id"], name: "index_stats_on_npc_id"
   add_index "stats", ["player_id"], name: "index_stats_on_player_id"

@@ -2,6 +2,7 @@ class Description < ActiveRecord::Base
   belongs_to :box
   belongs_to :npc
   belongs_to :item
+  belongs_to :effect
 
   def image
     return "box/#{self.file_path}.jpg" unless self.box.nil?
