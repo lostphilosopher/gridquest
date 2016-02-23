@@ -106,8 +106,6 @@ class SimpleEngine < Engine
     player.run
   end
 
-  private
-
   def pick_npc_action
     rand(3)
   end

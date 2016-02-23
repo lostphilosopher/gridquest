@@ -8,8 +8,6 @@ class Speed < SimpleEngine
     player
   end
 
-  private
-
   def self.defense(character)
     max_defense = self.max_defense(character) + 1
     rand(character.stat.base_defense..max_defense)
