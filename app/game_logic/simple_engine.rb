@@ -3,6 +3,7 @@ class SimpleEngine < Engine
   BASE_NUMBER = 20
 
   COMBAT_ACTIONS = %w(heavy_attack quick_attack defend)
+  CLASSES = %w(default attack defense speed)
 
   # @todo: @player @npc
 

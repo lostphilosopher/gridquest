@@ -113,7 +113,16 @@ class GamesController < ApplicationController
   # :nocov:
 
   def set_engine
-    @engine = SimpleEngine.new
+    case current_user.game.player.stat.character_class
+    when 'attack'
+      @engine = Attack.new
+    when 'defense'
+      @engine = Defense.new
+    when 'speed'
+      @engine = Speed.new
+    else
+      @engine = SimpleEngine.new
+    end
   end
 
   def destroy_previous_game

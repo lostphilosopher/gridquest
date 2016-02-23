@@ -180,4 +180,40 @@ RSpec.describe GamesController, type: :controller do
       it { expect(player.equipped_items).to include item }
     end
   end
+
+  describe '.set_engine' do
+    let!(:grid) do
+      grid = FactoryGirl.create(:grid)
+      grid.update(victory_box_id: Box.second.id)
+      FactoryGirl.create(:npc, current_box_id: Box.second.id)
+      grid
+    end
+    let!(:game) { FactoryGirl.create(:game, grid: grid, player: player, user: user) }
+    let!(:player) { FactoryGirl.create(:player, stat: stat, current_box_id: grid.find_by_coordinates(1,1).id) }
+
+    context 'attack character' do
+      let!(:stat) { FactoryGirl.create(:stat, character_class: 'attack') }
+      before do
+        sign_in user
+        get :edit, id: game.id
+      end
+      it { expect(assigns(:engine)).to be_instance_of Attack }
+    end
+    context 'defense character' do
+      let!(:stat) { FactoryGirl.create(:stat, character_class: 'defense') }
+      before do
+        sign_in user
+        get :edit, id: game.id
+      end
+      it { expect(assigns(:engine)).to be_instance_of Defense }
+    end
+    context 'speed character' do
+      let!(:stat) { FactoryGirl.create(:stat, character_class: 'speed') }
+      before do
+        sign_in user
+        get :edit, id: game.id
+      end
+      it { expect(assigns(:engine)).to be_instance_of Speed }
+    end
+  end
 end

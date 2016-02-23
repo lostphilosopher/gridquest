@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219044447) do
+ActiveRecord::Schema.define(version: 20160223023053) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
@@ -124,12 +124,13 @@ ActiveRecord::Schema.define(version: 20160219044447) do
     t.integer  "base_attack"
     t.integer  "base_defense"
     t.integer  "current_health"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "player_id"
     t.integer  "npc_id"
     t.integer  "item_id"
-    t.integer  "xp"
+    t.integer  "xp",              default: 0
+    t.string   "character_class"
   end
 
   add_index "stats", ["item_id"], name: "index_stats_on_item_id"

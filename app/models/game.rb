@@ -40,6 +40,7 @@ class Game < ActiveRecord::Base
       name: 'Player 1',
       current_box_id: grid.random_clear_box.id,
       stat: Stat.create(
+              character_class: SimpleEngine::CLASSES[rand(1..3)],
               base_health: 10,
               base_attack: rand(1..10),
               base_defense: rand(1..10),
