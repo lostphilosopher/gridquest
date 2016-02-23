@@ -1,4 +1,6 @@
 class Player < ActiveRecord::Base
+  include Character
+
   belongs_to :game
 
   has_one :stat, dependent: :destroy
@@ -6,9 +8,6 @@ class Player < ActiveRecord::Base
   has_many :items, dependent: :destroy
 
   after_save :mark_current_box_explored
-
-  MAX_ITEMS = 5
-  MAX_EQUIPPED = 2
 
   def run
     move(random_path)
@@ -36,9 +35,6 @@ class Player < ActiveRecord::Base
     update(current_box_id: new_box.id)
   end
 
-  def box
-    Box.find(current_box_id)
-  end
 
   def take_item(item)
     return if inventory_full?
@@ -51,9 +47,6 @@ class Player < ActiveRecord::Base
     game.write_note("Dropped #{item.description.name}.")
   end
 
-  def equipped_items
-    items_in_inventory.where(player: self, equipped: true)
-  end
 
   def fully_equipped?
     equipped_items.count >= MAX_EQUIPPED

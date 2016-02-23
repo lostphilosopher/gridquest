@@ -1,4 +1,5 @@
 class Npc < ActiveRecord::Base
+  include Character
   has_one :description, dependent: :destroy
   has_one :stat, dependent: :destroy
   has_many :items
@@ -8,13 +9,8 @@ class Npc < ActiveRecord::Base
   after_create :populate_default_descriptions_and_stats
   after_create :place_on_grid
 
-  def box
-    return unless current_box_id
-    Box.find(current_box_id)
-  end
-
-  def equipped_items
-    Item.where(npc: self, equipped: true)
+  def items_in_inventory
+    Item.where(npc: self)
   end
 
   def self.create_boss(grid, description, box_id)
@@ -22,7 +18,7 @@ class Npc < ActiveRecord::Base
     npc.update(description: description, current_box_id: box_id)
     health = rand(10..20)
     npc.stat.update(
-      base_health: health, 
+      base_health: health,
       base_attack: rand(10..20),
       base_defense: rand(10..20),
       current_health: health
