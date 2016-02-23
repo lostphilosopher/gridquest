@@ -23,6 +23,7 @@ class GamesController < ApplicationController
   # @todo REFACTOR!!!
   def edit
     return redirect_to games_path unless @game = Game.find_by(id: params[:id])
+    game = @game
     action = params[:game_action]
     item_id = params[:item_id]
     player = game.player
