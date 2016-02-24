@@ -108,6 +108,33 @@ RSpec.describe Box, type: :model do
       it { expect(box.display_character).to eq 'L' }
     end
 
+    context 'when the player knows an effect is present' do
+      context 'and the effect is heal' do
+        before do
+          e = FactoryGirl.create(:effect, current_box_id: box.id)
+          e.of_type('heal')
+          box.update(explored: true)
+        end
+        it { expect(box.display_character).to eq '+' }
+      end
+      context 'and the effect is hurt' do
+        before do
+          e = FactoryGirl.create(:effect, current_box_id: box.id)
+          e.of_type('hurt')
+          box.update(explored: true)
+        end
+        it { expect(box.display_character).to eq '-' }
+      end
+      context 'and the effect is teleport' do
+        before do
+          e = FactoryGirl.create(:effect, current_box_id: box.id)
+          e.of_type('teleport')
+          box.update(explored: true)
+        end
+        it { expect(box.display_character).to eq '%' }
+      end
+    end
+
     context 'when the player knows an enemy is present' do
       before do
         FactoryGirl.create(:npc, current_box_id: box.id)
