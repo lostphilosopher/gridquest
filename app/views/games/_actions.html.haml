@@ -49,6 +49,8 @@
       - else
         = SimpleEngine::COMBAT_ACTIONS[2].humanize
     .col-xs-5.text-right
+      = link_to 'Special', edit_game_path(id: @game.id, game_action: 'special')
+      = ' | '
       - if @box.npc && !@box.npc.stat.dead?
         = link_to 'Run', edit_game_path(id: @game.id, game_action: 'run')
       - else

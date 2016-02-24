@@ -104,6 +104,8 @@ class GamesController < ApplicationController
     if player.box.possible_actions(item_id).include? action
       if action == 'run'
         @engine.run(player, player.box.npc)
+      elsif action == 'special'
+        player.stat.special
       elsif 'nsew'.include? action
         player.move(action)
       elsif SimpleEngine::COMBAT_ACTIONS.include? action

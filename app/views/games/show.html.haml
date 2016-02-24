@@ -3,12 +3,11 @@
     .col-md-3
       .hidden-xs.hidden-sm
         = render 'box'
+        = render 'effect'
     .col-md-6
-      .hidden-md.hidden-lg
-        = render 'hud'
+      = render 'hud'
       = render 'grid'
     .col-md-3
-      = render 'effect'
       = render 'npc'
       = render 'item'
 
@@ -23,6 +22,7 @@
     .col-sm-6
       .visible-xs-block.visible-sm-block.hidden-md.hidden-lg
         = render 'box'
+        = render 'effect'
       .hidden-xs.hidden-sm.visible-md-block.visible-lg-block
         = render 'feed'
     .col-sm-3

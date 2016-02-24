@@ -7,6 +7,8 @@
 %br
 = "Defense: #{SimpleEngine.max_defense(@game.player)}/#{@game.player.stat.base_defense}"
 %br
+= "Special: #{@game.player.stat.charges}"
+%br
 = "XP: #{@game.player.stat.xp.to_i}"
 %br
 = "Speciality: #{@game.player.stat.character_class_description}"

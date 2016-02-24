@@ -72,7 +72,6 @@ class Box < ActiveRecord::Base
       return '+' if effect.type?('heal')
       return '-' if effect.type?('hurt')
       return '%' if effect.type?('teleport')
-      return 'X'
     elsif npc && !npc.stat.dead?
       'E'
     elsif !item.nil?
@@ -104,6 +103,7 @@ class Box < ActiveRecord::Base
   def possible_actions(item_id = nil)
     actions = []
     actions << 'run'
+    actions << 'special' if player.stat.charges?
     if player.box.npc && !player.box.npc.stat.dead?
       actions << SimpleEngine::COMBAT_ACTIONS
     else

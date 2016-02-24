@@ -34,7 +34,7 @@ class Game < ActiveRecord::Base
     update(victory_description_id: v, defeat_description_id: d)
   end
 
-  # @todo Add description and class(?)
+  # @todo Add description
   def build_a_player
     Player.create(
       name: 'Player 1',
@@ -44,7 +44,8 @@ class Game < ActiveRecord::Base
               base_health: 10,
               base_attack: rand(1..10),
               base_defense: rand(1..10),
-              current_health: 10
+              current_health: 10,
+              charges: 2
             )
     )
   end

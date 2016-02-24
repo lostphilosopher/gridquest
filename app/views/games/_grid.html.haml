@@ -2,7 +2,11 @@
   - (1..@game.grid.length).reverse_each do |y|
     - (1..@game.grid.width).each do |x|
       - box = @game.grid.find_by_coordinates(x, y)
-      = box.display_character
+      - if box.display_character == '@'
+        %strong
+          = box.display_character
+      - else
+        = box.display_character
       - if x == @game.grid.width
         %br
   %hr
@@ -12,6 +16,15 @@
   %strong
     L:
   Locked
+  %strong
+    +:
+  Healing
+  %strong
+    \-:
+  Trap
+  %strong
+    \%:
+  Teleport
   %strong
     E:
   Enemy

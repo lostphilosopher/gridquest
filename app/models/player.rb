@@ -35,7 +35,6 @@ class Player < ActiveRecord::Base
     update(current_box_id: new_box.id)
   end
 
-
   def take_item(item)
     return if inventory_full?
     item.update(player: self, current_box_id: nil, equipped: false)

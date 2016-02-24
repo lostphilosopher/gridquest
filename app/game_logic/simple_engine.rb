@@ -33,7 +33,6 @@ class SimpleEngine < Engine
       player.game.write_note("You strike back.")
     end
 
-
     # If the second to strike is stil around, give them the opportunity
     round(combatant_2, combatant_1, player)
     # Award XP

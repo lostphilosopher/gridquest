@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223033241) do
+ActiveRecord::Schema.define(version: 20160224011411) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
@@ -143,6 +143,7 @@ ActiveRecord::Schema.define(version: 20160223033241) do
     t.integer  "xp",              default: 0
     t.string   "character_class"
     t.integer  "effect_id"
+    t.integer  "charges",         default: 0
   end
 
   add_index "stats", ["effect_id"], name: "index_stats_on_effect_id"
