@@ -1,15 +1,15 @@
 .container-fluid.text-center
   .row
     .col-xs-5.col-xs-offset-1.text-left
-      - if @box.npc && !@box.npc.stat.dead?
-        = link_to SimpleEngine::COMBAT_ACTIONS[0].humanize, edit_game_path(id: @game.id, game_action: SimpleEngine::COMBAT_ACTIONS[0])
+      - if @game.player.stat.charges?
+        = link_to 'Special', edit_game_path(id: @game.id, game_action: 'special')
       - else
-        = SimpleEngine::COMBAT_ACTIONS[0].humanize
+        Special
     .col-xs-5.text-right
       - if @box.npc && !@box.npc.stat.dead?
-        = link_to SimpleEngine::COMBAT_ACTIONS[1].humanize, edit_game_path(id: @game.id, game_action: SimpleEngine::COMBAT_ACTIONS[1])
+        = link_to 'Attack', edit_game_path(id: @game.id, game_action: 'attack')
       - else
-        = SimpleEngine::COMBAT_ACTIONS[1].humanize
+        Attack
 
   .row
     .col-xs-2.col-xs-offset-3
@@ -44,16 +44,11 @@
 
   .row
     .col-xs-5.col-xs-offset-1.text-left
-      - if @box.npc && !@box.npc.stat.dead?
-        = link_to SimpleEngine::COMBAT_ACTIONS[2].humanize, edit_game_path(id: @game.id, game_action: SimpleEngine::COMBAT_ACTIONS[2])
+      - if @box.item && !@box.player.inventory_full?
+        = link_to 'Take', edit_game_path(id: @game.id, item_id: @box.item.id, game_action: 't')
       - else
-        = SimpleEngine::COMBAT_ACTIONS[2].humanize
+        Take
     .col-xs-5.text-right
-      - if @game.player.stat.charges?
-        = link_to 'Special', edit_game_path(id: @game.id, game_action: 'special')
-      - else
-        Special
-      = ' | '
       - if @box.npc && !@box.npc.stat.dead?
         = link_to 'Run', edit_game_path(id: @game.id, game_action: 'run')
       - else

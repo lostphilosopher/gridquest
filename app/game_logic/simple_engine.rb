@@ -83,7 +83,7 @@ class SimpleEngine < Engine
   def first_striker(action, player, npc)
     #@todo: Ensure that player and npc are Player and Npc instances
     # Rock, Paper, Scissors
-    npc_action = pick_npc_action
+    npc_action = pick_action
     if action == COMBAT_ACTIONS[npc_action]
       # @todo: How to handle draw???
       #        - retry?
@@ -99,12 +99,12 @@ class SimpleEngine < Engine
 
   def run(player, npc)
     player.game.write_note("Running.")
-    npc_action = pick_npc_action
+    npc_action = pick_action
     round(npc, player, player) if 'quick_attack' == COMBAT_ACTIONS[npc_action]
     player.run
   end
 
-  def pick_npc_action
+  def pick_action
     rand(3)
   end
 
