@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GridsController, type: :controller do
+RSpec.describe DescriptionController, type: :controller do
   let!(:user) { FactoryGirl.create(:user, email: 'wandersen02@gmail.com') }
 
   before { sign_in user }
@@ -17,18 +17,18 @@ RSpec.describe GridsController, type: :controller do
 
     it { expect(response).to have_http_status :ok }
     it { expect(response).to render_template 'new' }
-    it { expect(assigns(:grid)).to be_instance_of Grid }
+    it { expect(assigns(:grid)).to be_instance_of Description }
   end
 
   describe 'POST #create' do
-    before { post :create, grid: { width: 3, length: 3 } }
+    before { post :create, description: { width: 3, length: 3 } }
 
-    it { expect(Grid.count).to eq 1 }
+    it { expect(Description.count).to eq 1 }
   end
 
   describe 'GET #show' do
-    let!(:grid) { FactoryGirl.create(:grid) }
-    before { get :show, { id: grid.id } }
+    let!(:description) { FactoryGirl.create(:description) }
+    before { get :show, { id: description.id } }
 
     it { expect(response).to have_http_status :ok }
     it { expect(response).to render_template 'show' }

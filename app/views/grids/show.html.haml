@@ -1,11 +1,17 @@
 = "Length: #{@grid.length}"
 = "Width: #{@grid.width}"
 %br
-= link_to 'Add Victory Description', '#'
+- if @grid.victory_description_id.nil?
+  = link_to 'Add Victory Description', new_description_path
+- else
+  = "#{@grid.victory_description_id}"
 %br
-= link_to 'Add Defeat Description', '#'
+- if @grid.defeat_description_id.nil?
+  = link_to 'Add Defeat Description', new_description_path
+- else
+  = "#{@grid.defeat_description_id}"
 %br
-= link_to 'Add Box', '#'
+= link_to 'Add Box', new_box_path
 %br
 = link_to 'Add NPC', '#'
 %br

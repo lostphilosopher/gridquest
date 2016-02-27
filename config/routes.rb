@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   end
 
   resources :grids
+  resources :descriptions
+  resources :boxes
+  resources :npcs
+  resources :items
 
   get '/admin', to: 'admin#index'
 

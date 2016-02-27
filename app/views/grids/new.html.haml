@@ -1,9 +1,35 @@
 %h2
   Create a new grid
-= form_for @grid do |f|
-  = f.label :length
-  = f.number_field :length
-  = f.label :width
-  = f.number_field :width
-
-  = f.submit
+= form_tag grids_path, method: :post do
+  %h3
+    Grid
+  %br
+  = fields_for :grid do |ff|
+    = ff.label :length
+    = ff.number_field :length
+    %br
+    = ff.label :width
+    = ff.number_field :width
+    %br
+  %h3
+    Victory Description
+  %br
+  = fields_for :victory_description do |ff|
+    = ff.label :name
+    = ff.text_field :name
+    %br
+    = ff.label :text
+    = ff.text_field :text
+    %br
+  %h3
+    Defeat Description
+  %br
+  = fields_for :defeat_description do |ff|
+    = ff.label :name
+    = ff.text_field :name
+    %br
+    = ff.label :text
+    = ff.text_field :text
+    %br
+    %br
+  = submit_tag

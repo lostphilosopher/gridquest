@@ -1,0 +1,13 @@
+%h2
+  Create a new description
+= form_for @description do |f|
+  = f.label :name
+  = f.text_field :name
+  = f.label :text
+  = f.text_field :text
+
+  = f.hidden_field(:parent, value: @parent)
+  = f.hidden_field(:parent_id, value: @parent_id)
+  = f.hidden_field(:role, value: @role)
+
+  = f.submit

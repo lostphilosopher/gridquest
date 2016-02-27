@@ -20,6 +20,21 @@ class GridsController < ApplicationController
   private
 
   def grid_params
-    params.require(:grid).permit(:length, :width)
+    v = Description.create(
+      name: params[:victory_description][:name],
+      text: params[:victory_description][:text],
+    )
+    d = Description.create(
+      name: params[:defeat_description][:name],
+      text: params[:defeat_description][:text],
+    )
+
+    {
+      length: params[:grid][:length],
+      width: params[:grid][:width],
+      victory_description_id: v.id,
+      defeat_description_id: d.id
+
+    }
   end
 end
