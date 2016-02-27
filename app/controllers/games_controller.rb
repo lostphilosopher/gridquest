@@ -47,14 +47,14 @@ class GamesController < ApplicationController
   def defeat
     return redirect_to games_path unless game = Game.find_by(id: params[:id])
     return redirect_to game_path(id: game.id) unless game.defeat?
-    @message = Description.find(game.defeat_description_id).text
+    @message = Description.find(game.grid.defeat_description_id).text
     @notes = game.recent_notes
   end
 
   def victory
     return redirect_to games_path unless game = Game.find_by(id: params[:id])
     return redirect_to game_path(id: game.id) unless game.victory?
-    @message = Description.find(game.victory_description_id).text
+    @message = Description.find(game.grid.victory_description_id).text
     @notes = game.recent_notes
   end
 

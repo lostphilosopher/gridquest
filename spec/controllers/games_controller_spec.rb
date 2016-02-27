@@ -88,7 +88,7 @@ RSpec.describe GamesController, type: :controller do
       end
       it { should respond_with :ok }
       it { should render_template 'victory' }
-      it { expect(assigns(:message)).to eq Description.find(game.victory_description_id).text }
+      it { expect(assigns(:message)).to eq Description.find(game.grid.victory_description_id).text }
       it { expect(assigns(:notes)).to eq [] }
     end
   end
@@ -111,7 +111,7 @@ RSpec.describe GamesController, type: :controller do
       end
       it { should respond_with :ok }
       it { should render_template 'defeat' }
-      it { expect(assigns(:message)).to eq Description.find(game.defeat_description_id).text }
+      it { expect(assigns(:message)).to eq Description.find(game.grid.defeat_description_id).text }
       it { expect(assigns(:notes)).to eq [] }
     end
   end

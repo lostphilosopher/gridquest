@@ -31,7 +31,7 @@ class Game < ActiveRecord::Base
   def default_endings
     v = Description.create(Description.pick_from_json('victory')).id
     d = Description.create(Description.pick_from_json('defeat')).id
-    update(victory_description_id: v, defeat_description_id: d)
+    grid.update(victory_description_id: v, defeat_description_id: d)
   end
 
   # @todo Add description

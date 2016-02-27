@@ -99,7 +99,7 @@ RSpec.describe Player, type: :model do
 
   describe '.take_item' do
     let!(:player) { FactoryGirl.create(:player) }
-    let!(:game) { FactoryGirl.create(:game, player: player) }
+    let!(:game) { FactoryGirl.create(:game, player: player, grid: grid) }
     let!(:item) { FactoryGirl.create(:item) }
     it "adds the item to the player's inventory" do
       player.take_item(item)
@@ -110,7 +110,7 @@ RSpec.describe Player, type: :model do
   describe '.run' do
     let(:box) { Box.first }
     let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }
-    let!(:game) { FactoryGirl.create(:game, player: player) }
+    let!(:game) { FactoryGirl.create(:game, player: player, grid: grid) }
     it 'moves the player anywhere other than where they are' do
       old_position = player.current_box_id
       player.run
@@ -121,7 +121,7 @@ RSpec.describe Player, type: :model do
   describe '.drop_item' do
     let(:box) { Box.first }
     let!(:player) { FactoryGirl.create(:player, current_box_id: box.id) }
-    let!(:game) { FactoryGirl.create(:game, player: player) }
+    let!(:game) { FactoryGirl.create(:game, player: player, grid: grid) }
     let!(:item) { FactoryGirl.create(:item, grid: grid) }
 
     before do

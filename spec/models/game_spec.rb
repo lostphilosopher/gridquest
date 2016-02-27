@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
-  let!(:game) { FactoryGirl.create(:game) }
+  let!(:grid) { FactoryGirl.create(:grid) }
+  let!(:game) { FactoryGirl.create(:game, grid: grid) }
 
   describe '.write_note' do
     context 'with text' do
@@ -81,7 +82,7 @@ RSpec.describe Game, type: :model do
   end
 
   describe '.default_endings' do
-    it { expect(game.victory_description_id).not_to eq nil }
-    it { expect(game.defeat_description_id).not_to eq nil }
+    it { expect(game.grid.victory_description_id).not_to eq nil }
+    it { expect(game.grid.defeat_description_id).not_to eq nil }
   end
 end

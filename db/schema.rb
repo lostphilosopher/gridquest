@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224011411) do
+ActiveRecord::Schema.define(version: 20160225135829) do
 
   create_table "boxes", force: :cascade do |t|
     t.integer  "x"
@@ -55,11 +55,9 @@ ActiveRecord::Schema.define(version: 20160224011411) do
   add_index "effects", ["grid_id"], name: "index_effects_on_grid_id"
 
   create_table "games", force: :cascade do |t|
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "user_id"
-    t.integer  "defeat_description_id"
-    t.integer  "victory_description_id"
   end
 
   add_index "games", ["user_id"], name: "index_games_on_user_id"
@@ -67,10 +65,12 @@ ActiveRecord::Schema.define(version: 20160224011411) do
   create_table "grids", force: :cascade do |t|
     t.integer  "length"
     t.integer  "width"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "game_id"
     t.integer  "victory_box_id"
+    t.integer  "victory_description_id"
+    t.integer  "defeat_description_id"
   end
 
   add_index "grids", ["game_id"], name: "index_grids_on_game_id"

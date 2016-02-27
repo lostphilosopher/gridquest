@@ -6,7 +6,8 @@ RSpec.describe SimpleEngine, type: :model do
   let!(:player) { FactoryGirl.create(:player, stat: stat_1) }
   let!(:npc) { FactoryGirl.create(:npc, stat: stat_2) }
   let!(:user) { FactoryGirl.create(:user) }
-  let!(:game) { FactoryGirl.create(:game, player: player, user: user) }
+  let!(:grid) { FactoryGirl.create(:grid) }
+  let!(:game) { FactoryGirl.create(:game, player: player, grid: grid, user: user) }
 
   before do
     @foo = SimpleEngine.new
@@ -108,7 +109,6 @@ RSpec.describe SimpleEngine, type: :model do
   end
 
   describe '.run' do
-    let!(:grid) { FactoryGirl.create(:grid) }
     let!(:box) { Box.first }
     it 'puts the player on a new square' do
       player.update(

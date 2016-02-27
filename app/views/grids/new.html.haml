@@ -1,0 +1,9 @@
+%h2
+  Create a new grid
+= form_for @grid do |f|
+  = f.label :length
+  = f.number_field :length
+  = f.label :width
+  = f.number_field :width
+
+  = f.submit
