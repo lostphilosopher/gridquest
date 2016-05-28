@@ -28,6 +28,8 @@ class GamesController < ApplicationController
     item_id = params[:item_id]
     player = game.player
 
+    action = SimpleEngine::COMBAT_ACTIONS[@engine.pick_action] if (action == 'attack')
+
     take_game_action(item_id, action, player)
 
     player.box.effect.fire(player) if (player.box.effect? && !player.box.effect.stat.dead?)
